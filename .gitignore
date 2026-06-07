@@ -1,0 +1,6 @@
+﻿node_modules/
+package.json
+package-lock.json
+screenshot.js
+promo.html
+promo2.html
