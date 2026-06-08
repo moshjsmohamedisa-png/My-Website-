@@ -81,25 +81,27 @@
       position:relative; border-radius:20px; padding:3px; background:#0C0C0E;
       isolation:isolate;
     }
-    /* the traveling red light around the edge */
+    /* the traveling red light around the edge — paused until the frame is on-screen (perf) */
     .glow-frame::before {
       content:''; position:absolute; inset:0; border-radius:inherit; z-index:-1; padding:0;
       background: conic-gradient(from var(--ang),
         rgba(225,20,20,0) 0deg, rgba(225,20,20,0) 60deg,
         #FF2A2A 110deg, #FF6B6B 130deg, #FF2A2A 150deg,
         rgba(225,20,20,0) 200deg, rgba(225,20,20,0) 360deg);
-      animation: rotateAng 4.5s linear infinite;
+      animation: rotateAng 5s linear infinite; animation-play-state: paused;
     }
     /* soft blurred glow halo (same rotation) */
     .glow-frame::after {
-      content:''; position:absolute; inset:-6px; border-radius:24px; z-index:-2;
+      content:''; position:absolute; inset:-5px; border-radius:24px; z-index:-2;
       background: conic-gradient(from var(--ang),
         rgba(225,20,20,0) 0deg, rgba(225,20,20,0) 60deg,
-        rgba(255,42,42,0.9) 120deg, rgba(225,20,20,0) 200deg, rgba(225,20,20,0) 360deg);
-      filter: blur(16px); opacity:.75;
-      animation: rotateAng 4.5s linear infinite;
+        rgba(255,42,42,0.85) 120deg, rgba(225,20,20,0) 200deg, rgba(225,20,20,0) 360deg);
+      filter: blur(11px); opacity:.55;
+      animation: rotateAng 5s linear infinite; animation-play-state: paused;
     }
-    .glow-frame:hover::before, .glow-frame:hover::after { animation-duration: 2.6s; }
+    /* only animate frames currently in the viewport */
+    .glow-frame.in-view::before, .glow-frame.in-view::after { animation-play-state: running; }
+    .glow-frame:hover::before, .glow-frame:hover::after { animation-duration: 3s; }
     .glow-inner { position:relative; border-radius:17px; overflow:hidden; background:#000; }
     .glow-inner video { display:block; width:100%; height:100%; object-fit:cover; background:#000; }
 
@@ -125,6 +127,12 @@
     .fade-up { animation: fadeUp .9s var(--spring) both; }
     .d1{animation-delay:.1s}.d2{animation-delay:.24s}.d3{animation-delay:.38s}
 
+    /* mobile: static red border (no animated conic / blur halo) → smooth, no GPU hang */
+    @media (max-width:768px){
+      .glow-frame::before{ background:#E11414!important; animation:none!important; }
+      .glow-frame::after{ display:none!important; }
+      .font-display{ line-height:1.04!important; }
+    }
     @media (prefers-reduced-motion: reduce){ *{animation:none!important;transition:none!important} .reveal{opacity:1!important;transform:none!important} .glow-frame::before,.glow-frame::after{animation:none!important} }
   </style>
 </head>
@@ -168,7 +176,7 @@
       <div class="reveal mb-12">
         <div class="glow-frame" style="max-width:960px;margin-inline:auto;">
           <div class="glow-inner" style="aspect-ratio:16/9;">
-            <video data-src="https://res.cloudinary.com/dujeejgez/video/upload/portfolio/own-sound-design.mp4" poster="https://res.cloudinary.com/dujeejgez/video/upload/so_2,w_1400,q_auto/portfolio/own-sound-design.jpg" playsinline preload="none"></video>
+            <video class="reel-vid" data-preview="https://res.cloudinary.com/dujeejgez/video/upload/q_auto:eco,f_auto,w_640/portfolio/own-sound-design.mp4" data-full="https://res.cloudinary.com/dujeejgez/video/upload/q_auto,w_1280/portfolio/own-sound-design.mp4" poster="https://res.cloudinary.com/dujeejgez/video/upload/so_2,w_1400,q_auto/portfolio/own-sound-design.jpg" muted loop playsinline preload="none"></video>
             <div class="vid-scrim"></div>
             <div class="play-orb"><svg width="24" height="24" viewBox="0 0 22 22" fill="none"><path d="M7 4L18 11L7 18V4Z" fill="#fff"/></svg></div>
             <div class="vid-meta">
@@ -185,7 +193,7 @@
 
         <div class="glow-frame">
           <div class="glow-inner" style="aspect-ratio:9/16;">
-            <video data-src="https://res.cloudinary.com/dujeejgez/video/upload/portfolio/best-video.mp4" poster="https://res.cloudinary.com/dujeejgez/video/upload/so_2,w_700,q_auto/portfolio/best-video.jpg" playsinline preload="none"></video>
+            <video class="reel-vid" data-preview="https://res.cloudinary.com/dujeejgez/video/upload/q_auto:eco,f_auto,w_480/portfolio/best-video.mp4" data-full="https://res.cloudinary.com/dujeejgez/video/upload/q_auto,w_720/portfolio/best-video.mp4" poster="https://res.cloudinary.com/dujeejgez/video/upload/so_2,w_700,q_auto/portfolio/best-video.jpg" muted loop playsinline preload="none"></video>
             <div class="vid-scrim"></div>
             <div class="play-orb"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M7 4L18 11L7 18V4Z" fill="#fff"/></svg></div>
             <div class="vid-meta">
@@ -198,7 +206,7 @@
 
         <div class="glow-frame">
           <div class="glow-inner" style="aspect-ratio:9/16;">
-            <video data-src="https://res.cloudinary.com/dujeejgez/video/upload/portfolio/fourth-reel.mp4" poster="https://res.cloudinary.com/dujeejgez/video/upload/so_2,w_700,q_auto/portfolio/fourth-reel.jpg" playsinline preload="none"></video>
+            <video class="reel-vid" data-preview="https://res.cloudinary.com/dujeejgez/video/upload/q_auto:eco,f_auto,w_480/portfolio/fourth-reel.mp4" data-full="https://res.cloudinary.com/dujeejgez/video/upload/q_auto,w_720/portfolio/fourth-reel.mp4" poster="https://res.cloudinary.com/dujeejgez/video/upload/so_2,w_700,q_auto/portfolio/fourth-reel.jpg" muted loop playsinline preload="none"></video>
             <div class="vid-scrim"></div>
             <div class="play-orb"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M7 4L18 11L7 18V4Z" fill="#fff"/></svg></div>
             <div class="vid-meta">
@@ -211,7 +219,7 @@
 
         <div class="glow-frame">
           <div class="glow-inner" style="aspect-ratio:9/16;">
-            <video data-src="https://res.cloudinary.com/dujeejgez/video/upload/portfolio/tutorial.mp4" poster="https://res.cloudinary.com/dujeejgez/video/upload/so_2,w_700,q_auto/portfolio/tutorial.jpg" playsinline preload="none"></video>
+            <video class="reel-vid" data-preview="https://res.cloudinary.com/dujeejgez/video/upload/q_auto:eco,f_auto,w_480/portfolio/tutorial.mp4" data-full="https://res.cloudinary.com/dujeejgez/video/upload/q_auto,w_720/portfolio/tutorial.mp4" poster="https://res.cloudinary.com/dujeejgez/video/upload/so_2,w_700,q_auto/portfolio/tutorial.jpg" muted loop playsinline preload="none"></video>
             <div class="vid-scrim"></div>
             <div class="play-orb"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M7 4L18 11L7 18V4Z" fill="#fff"/></svg></div>
             <div class="vid-meta">
@@ -245,34 +253,65 @@
 
   <!-- ════════ SCRIPTS ════════ -->
   <script>
-    // Click-to-play: lazy-load src, play, hide overlays. Only one plays at a time.
-    const frames = document.querySelectorAll('.glow-inner');
-    let activeVid = null;
+    // ── TikTok-style reels: muted previews autoplay in-viewport; tap = full quality + sound.
+    //    Only ONE video ever has audio at a time.
+    const vids = Array.from(document.querySelectorAll('.reel-vid'));
+    let activeAudio = null;
 
-    frames.forEach(inner=>{
-      const video = inner.querySelector('video');
+    function setOverlays(v, show){
+      const inner = v.closest('.glow-inner');
+      ['.play-orb','.vid-scrim','.vid-meta'].forEach(s=>{
+        const el = inner.querySelector(s); if(el) el.classList.toggle('hide', !show);
+      });
+    }
+
+    // mute a video back to its silent looping preview state
+    function toSilent(v){
+      v.muted = true; v.loop = true; v.controls = false;
+      if(v._mode !== 'preview'){
+        v._mode = 'preview';
+        const t = v.currentTime;
+        v.src = v.dataset.preview; v.load();
+        v.play().catch(()=>{});
+      }
+      setOverlays(v, true);
+    }
+
+    // give a video sound + full quality; silence every other video first
+    function focusAudio(v){
+      vids.forEach(o=>{ if(o!==v) toSilent(o); });
+      v._mode = 'full';
+      v.src = v.dataset.full; v.load();
+      v.muted = false; v.loop = false; v.controls = true;
+      v.play().catch(()=>{});
+      activeAudio = v;
+      setOverlays(v, false);
+    }
+
+    vids.forEach(v=>{
+      v._mode = null;
+      const inner = v.closest('.glow-inner');
       const orb = inner.querySelector('.play-orb');
-      const scrim = inner.querySelector('.vid-scrim');
-      const meta = inner.querySelector('.vid-meta');
-
-      function showOverlays(show){
-        [orb,scrim,meta].forEach(el=>el && el.classList.toggle('hide', !show));
-      }
-
-      function playThis(){
-        if(!video.src) video.src = video.dataset.src;
-        if(activeVid && activeVid!==video){ activeVid.pause(); }
-        video.controls = true;
-        video.play().catch(()=>{});
-        activeVid = video;
-        showOverlays(false);
-      }
-
-      orb.addEventListener('click', playThis);
-      inner.addEventListener('click', e=>{ if(e.target===inner || e.target===scrim || e.target===meta){ playThis(); } });
-      video.addEventListener('pause', ()=>{ if(video.currentTime>0 && !video.ended) return; showOverlays(true); });
-      video.addEventListener('ended', ()=>{ showOverlays(true); video.controls=false; });
+      orb.addEventListener('click', e=>{ e.stopPropagation(); focusAudio(v); });
+      inner.addEventListener('click', e=>{ if(e.target===inner || e.target.classList.contains('vid-scrim') || e.target.classList.contains('vid-meta')) focusAudio(v); });
+      v.addEventListener('ended', ()=>{ if(v===activeAudio){ activeAudio=null; toSilent(v); } });
     });
+
+    // play/pause muted previews based on visibility + drive the border animation
+    const io = new IntersectionObserver(entries=>{
+      entries.forEach(e=>{
+        const v = e.target;
+        v.closest('.glow-frame').classList.toggle('in-view', e.isIntersecting);
+        if(e.isIntersecting){
+          if(!v.src){ v._mode='preview'; v.src = v.dataset.preview; v.load(); }
+          if(v.muted) v.play().catch(()=>{});           // resume silent preview
+        } else {
+          v.pause();
+          if(v===activeAudio){ activeAudio=null; toSilent(v); } // scrolled away from the audio reel → silence it
+        }
+      });
+    }, {threshold:0.35});
+    vids.forEach(v=>io.observe(v));
 
     // Scroll reveal
     const ro=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');ro.unobserve(e.target);}});},{threshold:0.08});
