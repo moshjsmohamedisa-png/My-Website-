@@ -138,6 +138,10 @@
       .vid-meta p{ font-size:11.5px!important; line-height:1.4!important; margin-top:3px!important; }
       .vid-meta .chip{ font-size:9px!important; padding:3px 8px!important; margin-bottom:6px!important; }
       .play-orb{ width:54px!important; height:54px!important; }
+      /* featured 16:9 video goes edge-to-edge on phones so it's as big as possible (others unchanged) */
+      .glow-frame.featured{ max-width:none!important; margin-left:-24px!important; margin-right:-24px!important; border-radius:4px; }
+      .glow-frame.featured .glow-inner{ border-radius:2px; }
+      .glow-frame.featured .vid-meta .font-display{ font-size:1.25rem!important; }
     }
     @media (prefers-reduced-motion: reduce){ *{animation:none!important;transition:none!important} .reveal{opacity:1!important;transform:none!important} .glow-frame::before,.glow-frame::after{animation:none!important} }
   </style>
@@ -180,7 +184,7 @@
 
       <!-- Featured 16:9 -->
       <div class="reveal mb-12">
-        <div class="glow-frame" style="max-width:960px;margin-inline:auto;">
+        <div class="glow-frame featured" style="max-width:960px;margin-inline:auto;">
           <div class="glow-inner" style="aspect-ratio:16/9;">
             <video class="reel-vid" data-preview="https://res.cloudinary.com/dujeejgez/video/upload/q_auto:eco,f_auto,w_640/portfolio/own-sound-design.mp4" data-full="https://res.cloudinary.com/dujeejgez/video/upload/q_auto,w_1280/portfolio/own-sound-design.mp4" poster="https://res.cloudinary.com/dujeejgez/video/upload/so_2,w_1400,q_auto/portfolio/own-sound-design.jpg" muted loop playsinline preload="none"></video>
             <div class="vid-scrim"></div>
