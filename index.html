@@ -3,868 +3,471 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mohamed Osama — Video Editor & Content Strategist</title>
+  <title>Mohamed Osama — Viral Reel Editing</title>
+  <meta name="description" content="Mohamed Osama — viral reel editor in Cairo. Hook-first reels, sound design, and motion graphics built to stop the scroll and convert." />
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
 
   <script>
     tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            bg:        '#080808',
-            surface:   '#111111',
-            elevated:  '#181818',
-            gold:      '#C9973A',
-            'gold-lt': '#E0B04A',
-            'gold-dim':'#7A5E22',
-            cream:     '#EEE8DC',
-            muted:     '#6B6358',
-          },
-          fontFamily: {
-            display: ['"Cormorant Garamond"', 'serif'],
-            body:    ['Inter', 'sans-serif'],
-          },
-        }
-      }
+      theme: { extend: {
+        colors: {
+          ink:'#070707', coal:'#0C0C0E', panel:'#121214', edge:'#1C1C20',
+          red:'#E11414', 'red-lt':'#FF2A2A', 'red-dk':'#8E0B0B', glow:'#FF3B3B',
+          bone:'#F4F1EE', ash:'#8A8A90', smoke:'#B8B8C0',
+        },
+        fontFamily: { display:['Anton','sans-serif'], head:['Archivo','sans-serif'], body:['Inter','sans-serif'], ar:['Cairo','sans-serif'] },
+      }}
     }
   </script>
 
   <style>
+    :root { --spring: cubic-bezier(0.34,1.56,0.64,1); --ease: cubic-bezier(0.22,1,0.36,1); }
+    @property --ang { syntax:'<angle>'; initial-value:0deg; inherits:false; }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { font-size: 16px; }
-    body { background: #080808; color: #EEE8DC; font-family: 'Inter', sans-serif; }
+    body {
+      background:
+        radial-gradient(ellipse 900px 620px at 82% -8%, rgba(225,20,20,0.18) 0%, transparent 58%),
+        radial-gradient(ellipse 700px 560px at -5% 12%, rgba(225,20,20,0.10) 0%, transparent 56%),
+        #070707;
+      color: #F4F1EE; font-family:'Inter',sans-serif; overflow-x: hidden;
+    }
+    ::selection { background: rgba(225,20,20,0.5); color: #fff; }
 
-    /* ── Film grain overlay ── */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 9999;
+    /* film grain */
+    body::after {
+      content:''; position: fixed; inset:0; z-index: 9999; pointer-events:none; mix-blend-mode: overlay; opacity:.5;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
+    }
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: #070707; }
+    ::-webkit-scrollbar-thumb { background: #8E0B0B; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #E11414; }
+
+    .font-display { font-family:'Anton',sans-serif; letter-spacing:0.01em; }
+    .font-head { font-family:'Archivo',sans-serif; }
+
+    /* nav */
+    .nav-glass {
+      backdrop-filter: blur(20px) saturate(150%); -webkit-backdrop-filter: blur(20px) saturate(150%);
+      background: rgba(7,7,7,0.55); border-bottom: 1px solid rgba(225,20,20,0.18);
     }
 
-    /* ── Scrollbar ── */
-    ::-webkit-scrollbar { width: 3px; }
-    ::-webkit-scrollbar-track { background: #080808; }
-    ::-webkit-scrollbar-thumb { background: #C9973A; border-radius: 2px; }
+    /* eyebrow tag */
+    .tag { display:inline-flex; align-items:center; gap:12px; font-size:11px; letter-spacing:0.32em; text-transform:uppercase; color:#FF2A2A; font-weight:700; font-family:'Archivo',sans-serif; }
+    .tag::before { content:''; width:32px; height:2px; background:#E11414; box-shadow:0 0 10px rgba(225,20,20,0.8); }
+    .tag.center::after { content:''; width:32px; height:2px; background:#E11414; box-shadow:0 0 10px rgba(225,20,20,0.8); }
 
-    /* ── Typography ── */
-    .font-display { font-family: 'Cormorant Garamond', serif; }
+    .red-glow-text { color:#fff; text-shadow: 0 0 22px rgba(225,20,20,0.55), 0 0 60px rgba(225,20,20,0.3); }
+    .red-fill { color:#E11414; text-shadow: 0 0 30px rgba(225,20,20,0.7); }
 
-    /* ── Nav ── */
-    .nav-solid {
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      background: rgba(8, 8, 8, 0.88);
-      border-bottom: 1px solid rgba(201, 151, 58, 0.1);
-    }
+    /* Buttons */
+    .btn-red { display:inline-flex; align-items:center; gap:10px; padding:15px 30px; border-radius:10px;
+      background: linear-gradient(180deg,#FF2A2A 0%,#E11414 60%,#B30F0F 100%); color:#fff; font-weight:800; font-size:14px;
+      font-family:'Archivo',sans-serif; text-transform:uppercase; letter-spacing:0.06em;
+      box-shadow: 0 1px 0 rgba(255,255,255,0.25) inset, 0 10px 34px rgba(225,20,20,0.4), 0 0 0 1px rgba(225,20,20,0.3);
+      transition: transform .25s var(--spring), box-shadow .25s var(--ease); }
+    .btn-red:hover { transform: translateY(-2px); box-shadow: 0 1px 0 rgba(255,255,255,0.35) inset, 0 16px 46px rgba(225,20,20,0.6), 0 0 30px rgba(225,20,20,0.4); }
+    .btn-red:active { transform: translateY(0) scale(0.98); }
+    .btn-red:focus-visible { outline:2px solid #FF2A2A; outline-offset:3px; }
 
-    /* ── Divider ── */
-    .divider {
-      height: 1px;
-      background: linear-gradient(to right, transparent, rgba(201,151,58,0.25), transparent);
-      margin: 0 24px;
-    }
+    .btn-ghost { display:inline-flex; align-items:center; gap:10px; padding:15px 28px; border-radius:10px;
+      border:1.5px solid rgba(225,20,20,0.45); color:#F4F1EE; font-weight:700; font-size:14px; background:rgba(225,20,20,0.05);
+      font-family:'Archivo',sans-serif; text-transform:uppercase; letter-spacing:0.06em;
+      transition: transform .25s var(--spring), border-color .25s var(--ease), background .25s var(--ease), box-shadow .25s var(--ease); }
+    .btn-ghost:hover { transform: translateY(-2px); border-color:#E11414; background:rgba(225,20,20,0.12); box-shadow:0 0 26px rgba(225,20,20,0.3); }
+    .btn-ghost:active { transform: translateY(0) scale(0.98); }
+    .btn-ghost:focus-visible { outline:2px solid #E11414; outline-offset:3px; }
 
-    /* ── Gold gradient text ── */
-    .text-gold-grad {
-      background: linear-gradient(120deg, #C9973A 0%, #EDD07A 55%, #C9973A 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+    /* ════ HERO ════ */
+    .hero { position: relative; min-height: 100svh; display:flex; align-items:center; overflow:hidden; }
+    .hero-bg { position:absolute; inset:0; z-index:0; background-size:cover; background-position:center 26%;
+               filter: contrast(1.12) brightness(0.5) saturate(0) grayscale(1); transform: scale(1.06); }
+    .hero-bg::after { content:''; position:absolute; inset:0; mix-blend-mode:multiply; opacity:0.65;
+               background: linear-gradient(120deg,#3a0606 0%, transparent 50%, #1a0303 100%); }
+    .hero-veil { position:absolute; inset:0; z-index:1; pointer-events:none;
+      background:
+        radial-gradient(ellipse 60% 55% at 78% 36%, rgba(225,20,20,0.34) 0%, transparent 56%),
+        linear-gradient(to top, rgba(7,7,7,0.98) 4%, rgba(7,7,7,0.4) 50%, rgba(7,7,7,0.72) 100%),
+        linear-gradient(to right, rgba(7,7,7,0.92) 0%, transparent 66%);
     }
+    .hero-content { position:relative; z-index:2; }
+    .hero-title { font-family:'Anton',sans-serif; line-height:0.95; letter-spacing:0.012em; text-transform:uppercase; position:relative; }
+    .hero-title .accent-bar { position:absolute; left:0; top:10%; bottom:10%; width:6px; border-radius:4px;
+      background:linear-gradient(180deg,#FF2A2A,#8E0B0B); box-shadow:0 0 20px rgba(225,20,20,0.65); }
+    .hero-title .l-white { display:block; color:#fff; text-shadow:0 0 24px rgba(225,20,20,0.4); }
+    .hero-title .l-red { display:block; color:#E11414; text-shadow:0 0 18px rgba(225,20,20,0.5); }
 
-    /* ── Heading accent line ── */
-    .h-accent { position: relative; display: inline-block; }
-    .h-accent::after {
-      content: '';
-      position: absolute;
-      bottom: -10px;
-      left: 0;
-      width: 36px;
-      height: 2px;
-      background: #C9973A;
-      border-radius: 1px;
-    }
+    /* big ticker strip */
+    @keyframes ticker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+    .ticker-wrap { overflow:hidden; border-top:1px solid rgba(225,20,20,0.25); border-bottom:1px solid rgba(225,20,20,0.25); background:rgba(225,20,20,0.04); }
+    .ticker { display:flex; white-space:nowrap; animation: ticker 26s linear infinite; }
+    .ticker span { font-family:'Anton',sans-serif; font-size:clamp(1.4rem,3vw,2.2rem); text-transform:uppercase; letter-spacing:0.04em; padding:14px 34px; color:rgba(244,241,238,0.16); }
+    .ticker span b { color:#E11414; -webkit-text-stroke:0; }
 
-    /* ── Card lift (services/non-video) ── */
-    .card-lift {
-      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
-                  box-shadow 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-    .card-lift:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 28px 70px rgba(0,0,0,0.55), 0 0 0 1px rgba(201,151,58,0.18) !important;
-    }
+    /* ════ VIDEO CTA TILE ════ */
+    .show-tile { position:relative; overflow:hidden; border-radius:24px; cursor:pointer; min-height:380px;
+      display:flex; flex-direction:column; justify-content:flex-end; padding:40px;
+      border:1px solid rgba(225,20,20,0.22);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.6), 0 30px 70px rgba(0,0,0,0.5);
+      transition: transform .55s var(--spring), border-color .4s var(--ease), box-shadow .55s var(--ease); }
+    .show-tile:hover { transform: translateY(-8px); border-color: rgba(225,20,20,0.6);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.6), 0 50px 100px rgba(0,0,0,0.6), 0 30px 90px rgba(225,20,20,0.28); }
+    .show-tile:focus-visible { outline:2px solid #E11414; outline-offset:4px; }
+    .show-bg { position:absolute; inset:0; z-index:0; background-size:cover; background-position:center;
+      filter: grayscale(0.55) contrast(1.15) brightness(0.42) saturate(0.8); transition: transform .9s var(--ease), filter .6s var(--ease); }
+    .show-tile:hover .show-bg { transform: scale(1.08); filter: grayscale(0.1) contrast(1.18) brightness(0.6) saturate(1.05); }
+    .show-bg::after { content:''; position:absolute; inset:0; mix-blend-mode:multiply; opacity:0.55;
+      background: linear-gradient(150deg,#3a0606 0%, transparent 55%, #1a0303 100%); }
+    .show-scrim { position:absolute; inset:0; z-index:1; background: linear-gradient(to top, rgba(7,7,7,0.96) 0%, rgba(7,7,7,0.18) 62%, rgba(7,7,7,0.45) 100%); }
+    .show-in { position:relative; z-index:2; }
+    .show-arrow { display:inline-flex; align-items:center; justify-content:center; width:52px; height:52px; border-radius:50%;
+      border:1.5px solid rgba(225,20,20,0.6); color:#FF2A2A; transition: transform .35s var(--spring), background .3s var(--ease), box-shadow .3s var(--ease); }
+    .show-tile:hover .show-arrow { background:#E11414; color:#fff; transform: translateX(6px) rotate(-45deg); box-shadow:0 0 30px rgba(225,20,20,0.7); }
+    .show-tile:hover .show-arrow svg path { stroke:#fff; }
 
-    /* ── Phone frame (video cards) ── */
-    .phone-wrap {
-      position: relative;
-      transform-style: preserve-3d;
-      will-change: transform;
-    }
+    .chip { display:inline-block; font-size:10.5px; letter-spacing:0.2em; text-transform:uppercase; color:#fff; font-weight:700; font-family:'Archivo',sans-serif;
+      background: rgba(225,20,20,0.85); border:1px solid rgba(255,60,60,0.5); padding:5px 12px; border-radius:999px; box-shadow:0 0 18px rgba(225,20,20,0.5); }
+    .chip.ghost { background: rgba(12,12,14,0.7); border:1px solid rgba(225,20,20,0.45); color:#FF2A2A; box-shadow:none; }
 
-    .phone-frame {
-      border-radius: 38px;
-      overflow: hidden;
-      border: 1.5px solid rgba(255,255,255,0.1);
-      position: relative;
-      background: #060606;
-      box-shadow:
-        /* Screen top-edge highlight */
-        inset 0 1px 1px rgba(255,255,255,0.12),
-        /* Deep bezel */
-        inset 0 0 0 1px rgba(0,0,0,0.45),
-        /* Tight contact shadow */
-        0 6px 14px rgba(0,0,0,0.55),
-        /* Mid float */
-        0 22px 55px rgba(0,0,0,0.78),
-        /* Far depth */
-        0 55px 110px rgba(0,0,0,0.88),
-        /* Atmospheric spread */
-        0 90px 160px rgba(0,0,0,0.65),
-        /* Gold atmosphere */
-        0 55px 90px rgba(201,151,58,0.07);
-    }
+    /* divider strip — thin, smooth, glowing */
+    .strip { height:1px; border:none; max-width:1100px; margin:0 auto;
+      background: linear-gradient(90deg, transparent 0%, rgba(225,20,20,0.65) 50%, transparent 100%);
+      box-shadow: 0 0 14px rgba(225,20,20,0.35); }
 
-    /* Pill notch at top */
-    .phone-frame::before {
-      content: '';
-      position: absolute;
-      top: 14px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 46px;
-      height: 5px;
-      border-radius: 3px;
-      background: rgba(255,255,255,0.07);
-      z-index: 10;
-      pointer-events: none;
-    }
+    /* ════ SERVICES ════ */
+    .svc { position:relative; padding:30px; border-radius:18px; background: linear-gradient(180deg,#121214 0%,#0C0C0E 100%); border:1px solid rgba(225,20,20,0.14); overflow:hidden;
+      transition: transform .4s var(--spring), border-color .3s var(--ease), box-shadow .4s var(--ease); }
+    .svc::before { content:''; position:absolute; top:0; left:0; width:100%; height:3px; background:linear-gradient(90deg,#E11414,transparent); opacity:0; transition:opacity .3s var(--ease); }
+    .svc:hover { transform: translateY(-7px); border-color:rgba(225,20,20,0.5); box-shadow: 0 30px 70px rgba(0,0,0,0.55), 0 20px 60px rgba(225,20,20,0.18); }
+    .svc:hover::before { opacity:1; }
+    .svc .ic { width:48px; height:48px; border-radius:13px; display:flex; align-items:center; justify-content:center;
+      background: linear-gradient(180deg, rgba(225,20,20,0.25), rgba(225,20,20,0.05)); border:1px solid rgba(225,20,20,0.3); margin-bottom:20px; transition: transform .4s var(--spring), box-shadow .3s var(--ease); }
+    .svc:hover .ic { transform: scale(1.1) rotate(-4deg); box-shadow:0 0 24px rgba(225,20,20,0.4); }
+    .svc .num { position:absolute; top:22px; right:26px; font-family:'Anton',sans-serif; font-size:2.4rem; color:rgba(225,20,20,0.14); line-height:1; }
 
-    /* Side power button */
-    .phone-frame::after {
-      content: '';
-      position: absolute;
-      right: -2px;
-      top: 80px;
-      width: 2.5px;
-      height: 52px;
-      border-radius: 0 2px 2px 0;
-      background: rgba(255,255,255,0.06);
-      pointer-events: none;
-    }
+    /* ════ ARABIC FORM ════ */
+    .form-wrap { direction:rtl; font-family:'Cairo',sans-serif; }
+    .form-card { background: linear-gradient(180deg,#121214 0%,#0A0A0C 100%);
+      border:1px solid rgba(225,20,20,0.3); border-radius:24px; padding:clamp(26px,5vw,48px);
+      box-shadow: 0 40px 120px rgba(0,0,0,0.7), 0 0 60px rgba(225,20,20,0.1), inset 0 1px 0 rgba(225,20,20,0.15); }
+    .fld { width:100%; background:#070707; border:1.5px solid rgba(225,20,20,0.2); border-radius:12px; color:#F4F1EE; font-size:15px;
+      padding:14px 16px; font-family:'Cairo',sans-serif; transition: border-color .25s var(--ease), box-shadow .25s var(--ease); }
+    .fld:focus { outline:none; border-color: #E11414; box-shadow: 0 0 0 3px rgba(225,20,20,0.18), 0 0 22px rgba(225,20,20,0.25); }
+    .fld::placeholder { color:#5b5b62; }
+    select.fld { appearance:none; -webkit-appearance:none; cursor:pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23E11414' stroke-width='1.8' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat:no-repeat; background-position: left 16px center; padding-left:38px; }
+    .lbl { font-size:14px; font-weight:700; color:#F4F1EE; margin-bottom:9px; display:flex; align-items:center; gap:8px; }
+    .lbl .dot { width:7px; height:7px; border-radius:50%; background:#E11414; box-shadow:0 0 10px rgba(225,20,20,0.8); flex:0 0 auto; }
 
-    /* Glare highlight */
-    .glare {
-      position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      background: linear-gradient(
-        148deg,
-        rgba(255,255,255,0.11) 0%,
-        rgba(255,255,255,0.04) 28%,
-        transparent 55%
-      );
-      pointer-events: none;
-      z-index: 6;
-      opacity: 0;
-      transition: opacity 0.35s ease;
-    }
-    .phone-wrap:hover .glare { opacity: 1; }
+    .reveal { opacity:0; transform: translateY(28px); transition: opacity .7s var(--ease), transform .7s var(--spring); }
+    .reveal.visible { opacity:1; transform: translateY(0); }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+    .fade-up { animation: fadeUp .9s var(--spring) both; }
+    .d1{animation-delay:.1s}.d2{animation-delay:.24s}.d3{animation-delay:.38s}.d4{animation-delay:.52s}.d5{animation-delay:.66s}
 
-    /* Ambient gold glow beneath */
-    .phone-glow {
-      position: absolute;
-      bottom: -38px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 72%;
-      height: 75px;
-      background: radial-gradient(ellipse, rgba(201,151,58,0.32) 0%, transparent 70%);
-      filter: blur(20px);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: -1;
-      opacity: 0.65;
-      transition: opacity 0.35s ease;
-    }
-    .phone-wrap:hover .phone-glow { opacity: 1.1; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .reel-deco { position:relative; width:78px; height:78px; border-radius:50%;
+      border:3px solid rgba(225,20,20,0.55); animation: spin 14s linear infinite; box-shadow:0 0 30px rgba(225,20,20,0.4); }
+    .reel-deco::before { content:''; position:absolute; inset:50%; width:16px; height:16px; margin:-8px; border-radius:50%; border:3px solid rgba(225,20,20,0.55); }
+    .reel-hole { position:absolute; width:10px; height:10px; border-radius:50%; background:rgba(225,20,20,0.6); }
 
-    /* ── Screen frame (landscape video) ── */
-    .screen-frame {
-      border-radius: 14px;
-      overflow: hidden;
-      border: 1.5px solid rgba(255,255,255,0.09);
-      position: relative;
-      background: #060606;
-      box-shadow:
-        inset 0 1px 1px rgba(255,255,255,0.1),
-        inset 0 0 0 1px rgba(0,0,0,0.4),
-        0 6px 14px rgba(0,0,0,0.5),
-        0 22px 55px rgba(0,0,0,0.78),
-        0 55px 110px rgba(0,0,0,0.85),
-        0 55px 90px rgba(201,151,58,0.07);
-    }
-
-
-    /* Volume buttons (left side) */
-    .phone-vol {
-      position: absolute;
-      left: -2px;
-      top: 55px;
-      display: flex;
-      flex-direction: column;
-      gap: 9px;
-      pointer-events: none;
-      z-index: 10;
-    }
-    .phone-vol span {
-      display: block;
-      width: 2.5px;
-      height: 26px;
-      border-radius: 2px 0 0 2px;
-      background: rgba(255,255,255,0.06);
-    }
-
-    /* ── Video card ── */
-    .vid-wrap { position: relative; cursor: pointer; }
-    .vid-overlay {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.15) 55%, rgba(0,0,0,0.28) 100%);
-      border-radius: inherit;
-      transition: opacity 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-    .vid-wrap.playing .vid-overlay { opacity: 0; pointer-events: none; }
-    .vid-wrap video { display: block; width: 100%; border-radius: inherit; }
-
-    .play-ring {
-      width: 62px; height: 62px;
-      border: 1.5px solid rgba(201,151,58,0.75);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      background: rgba(8,8,8,0.55);
-      backdrop-filter: blur(6px);
-      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
-                  background 0.2s ease,
-                  border-color 0.2s ease;
-    }
-    .play-ring:hover { transform: scale(1.14); background: rgba(201,151,58,0.18); border-color: #C9973A; }
-
-    /* ── Buttons ── */
-    .btn-gold {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 14px 28px;
-      background: #C9973A; color: #080808;
-      font-weight: 500; border-radius: 8px;
-      transition: background 0.2s ease, transform 0.15s ease;
-    }
-    .btn-gold:hover  { background: #E0B04A; }
-    .btn-gold:active { transform: scale(0.97); }
-    .btn-gold:focus-visible { outline: 2px solid #C9973A; outline-offset: 3px; }
-
-    .btn-outline {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 14px 28px;
-      border: 1px solid rgba(201,151,58,0.35); color: #EEE8DC;
-      font-weight: 500; border-radius: 8px;
-      transition: border-color 0.2s ease, background 0.2s ease, transform 0.15s ease;
-    }
-    .btn-outline:hover  { border-color: rgba(201,151,58,0.7); background: rgba(201,151,58,0.06); }
-    .btn-outline:active { transform: scale(0.97); }
-    .btn-outline:focus-visible { outline: 2px solid #C9973A; outline-offset: 3px; }
-
-    /* ── Service card ── */
-    .svc-card {
-      padding: 24px;
-      background: #111111;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.05);
-      transition: border-color 0.25s ease,
-                  transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
-                  box-shadow 0.35s ease;
-    }
-    .svc-card:hover {
-      border-color: rgba(201,151,58,0.22);
-      transform: translateY(-4px);
-      box-shadow: 0 20px 60px rgba(0,0,0,0.45);
-    }
-
-    /* ── Video rows responsive ── */
-    @media (max-width: 640px) {
-      .vid-row {
-        flex-direction: column !important;
-        align-items: center !important;
-        text-align: center !important;
-      }
-      .vid-row > div:last-child { text-align: center !important; }
-      .vid-row > div:last-child p:last-child { margin-left: 0 !important; }
-      .vid-row .phone-wrap { width: 220px !important; }
-    }
-
-    /* ── Scroll reveal ── */
-    .reveal {
-      opacity: 0;
-      transform: translateY(22px);
-      transition: opacity 0.65s cubic-bezier(0.34, 1.56, 0.64, 1),
-                  transform 0.65s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-
-    /* ── Hero fade-up keyframes ── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(26px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    .fade-up { animation: fadeUp 0.75s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
-    .d1 { animation-delay: 0.05s; }
-    .d2 { animation-delay: 0.18s; }
-    .d3 { animation-delay: 0.30s; }
-    .d4 { animation-delay: 0.44s; }
-    .d5 { animation-delay: 0.55s; }
+    @media (prefers-reduced-motion: reduce){ *{animation:none!important;transition:none!important} .reveal{opacity:1!important;transform:none!important} }
   </style>
 </head>
 
 <body>
 
-  <!-- ════════════════════════════════ NAV ════════════════════════════════ -->
-  <nav class="fixed top-0 left-0 right-0 z-50 nav-solid">
+  <!-- ════════ NAV ════════ -->
+  <nav class="fixed top-0 left-0 right-0 z-50 nav-glass">
     <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-
-      <a href="#" class="font-display text-xl font-semibold text-cream hover:text-gold"
-         style="letter-spacing:-0.01em; transition: color 0.2s ease;">
-        Mohamed Osama
+      <a href="#" class="font-head text-lg font-extrabold text-bone hover:text-red flex items-center gap-2" style="letter-spacing:0.02em;transition:color .25s var(--ease);">
+        <span style="display:inline-flex;width:30px;height:30px;border-radius:8px;background:linear-gradient(180deg,#FF2A2A,#B30F0F);align-items:center;justify-content:center;box-shadow:0 0 18px rgba(225,20,20,0.5);">
+          <svg width="14" height="14" viewBox="0 0 22 22" fill="none"><path d="M7 4L18 11L7 18V4Z" fill="#fff"/></svg>
+        </span>
+        MOHAMED OSAMA
       </a>
-
-      <!-- Desktop links -->
       <div class="hidden md:flex items-center gap-8">
-        <a href="#work"     class="text-sm text-muted hover:text-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded" style="transition:color 0.2s ease;">Work</a>
-        <a href="#services" class="text-sm text-muted hover:text-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded" style="transition:color 0.2s ease;">Services</a>
-        <a href="#about"    class="text-sm text-muted hover:text-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded" style="transition:color 0.2s ease;">About</a>
-        <a href="https://wa.me/201124193934" target="_blank" rel="noopener"
-           class="btn-gold" style="padding: 9px 20px; font-size: 13.5px;">
-          Let's Talk
-        </a>
+        <a href="videos.html" class="font-head text-sm font-semibold text-smoke hover:text-bone focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red rounded" style="transition:color .2s var(--ease);">Work</a>
+        <a href="#services" class="font-head text-sm font-semibold text-smoke hover:text-bone focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red rounded" style="transition:color .2s var(--ease);">Services</a>
+        <a href="#contact" class="font-head text-sm font-semibold text-smoke hover:text-bone focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red rounded" style="transition:color .2s var(--ease);">Contact</a>
+        <a href="videos.html" class="btn-red" style="padding:9px 20px;font-size:12.5px;">My Work</a>
       </div>
-
-      <!-- Mobile hamburger -->
-      <button id="menuBtn" aria-label="Open menu"
-              class="md:hidden text-muted hover:text-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded p-1"
-              style="transition:color 0.2s ease;">
-        <svg id="iconHam" width="22" height="22" viewBox="0 0 22 22" fill="none">
-          <path d="M3 6h16M3 11h16M3 16h16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-        </svg>
-        <svg id="iconX" class="hidden" width="22" height="22" viewBox="0 0 22 22" fill="none">
-          <path d="M4 4l14 14M18 4L4 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-        </svg>
+      <button id="menuBtn" aria-label="Open menu" class="md:hidden text-smoke hover:text-bone focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red rounded p-1" style="transition:color .2s var(--ease);">
+        <svg id="iconHam" width="24" height="24" viewBox="0 0 22 22" fill="none"><path d="M3 6h16M3 11h16M3 16h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        <svg id="iconX" class="hidden" width="24" height="24" viewBox="0 0 22 22" fill="none"><path d="M4 4l14 14M18 4L4 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
       </button>
     </div>
-
-    <!-- Mobile menu -->
-    <div id="mobileMenu" class="hidden md:hidden border-t nav-solid" style="border-color:rgba(201,151,58,0.1);">
+    <div id="mobileMenu" class="hidden md:hidden nav-glass border-t" style="border-color:rgba(225,20,20,0.2);">
       <div class="max-w-6xl mx-auto px-6 py-5 flex flex-col gap-5">
-        <a href="#work"     class="text-sm text-muted hover:text-cream" style="transition:color 0.2s ease;">Work</a>
-        <a href="#services" class="text-sm text-muted hover:text-cream" style="transition:color 0.2s ease;">Services</a>
-        <a href="#about"    class="text-sm text-muted hover:text-cream" style="transition:color 0.2s ease;">About</a>
-        <a href="https://wa.me/201124193934" target="_blank" rel="noopener" class="btn-gold self-start" style="padding:10px 20px;font-size:13px;">
-          Let's Talk
-        </a>
+        <a href="videos.html" class="font-head text-sm font-semibold text-smoke hover:text-bone">Work</a>
+        <a href="#services" class="font-head text-sm font-semibold text-smoke hover:text-bone">Services</a>
+        <a href="#contact" class="font-head text-sm font-semibold text-smoke hover:text-bone">Contact</a>
+        <a href="videos.html" class="btn-red self-start" style="padding:10px 22px;font-size:12.5px;">My Work</a>
       </div>
     </div>
   </nav>
 
+  <!-- ════════ HERO ════════ -->
+  <section class="hero">
+    <div class="hero-bg" style="background-image:url('688828156_122111140995259837_8332176616839840537_n.jpg');"></div>
+    <div class="hero-veil"></div>
 
-  <!-- ════════════════════════════════ HERO ════════════════════════════════ -->
-  <section class="min-h-screen flex flex-col justify-center px-6 pt-28 pb-20 relative overflow-hidden">
-
-    <!-- Background glows -->
-    <div style="position:absolute;inset:0;pointer-events:none;">
-      <div style="position:absolute;top:35%;left:50%;transform:translate(-50%,-50%);width:700px;height:700px;
-                  background:radial-gradient(ellipse,rgba(201,151,58,0.07) 0%,transparent 68%);border-radius:50%;"></div>
-      <div style="position:absolute;top:0;right:0;width:450px;height:450px;
-                  background:radial-gradient(ellipse at top right,rgba(201,151,58,0.045) 0%,transparent 60%);"></div>
-      <div style="position:absolute;bottom:0;left:0;width:350px;height:350px;
-                  background:radial-gradient(ellipse at bottom left,rgba(201,151,58,0.03) 0%,transparent 60%);"></div>
-    </div>
-
-    <div class="max-w-6xl mx-auto w-full relative">
-
-      <p class="fade-up d1 text-gold text-xs font-medium mb-5"
-         style="letter-spacing:0.2em; text-transform:uppercase;">
-        Video Editor &amp; Content Strategist · Cairo
-      </p>
-
-      <h1 class="fade-up d2 font-display text-cream mb-8"
-          style="font-size: clamp(2.8rem, 8vw, 6rem); font-weight:600; line-height:1.04; letter-spacing:-0.03em;">
-        I Don't Just Edit.<br/>
-        <span class="text-gold-grad" style="font-style:italic;">I Build Content</span><br/>
-        That Converts.
-      </h1>
-
-      <p class="fade-up d3 text-muted max-w-2xl mb-10"
-         style="font-size:1.1rem; line-height:1.75;">
-        Most editors hand you a file and disappear.
-        I hand you a strategy — hooks that stop the scroll, pacing that holds attention,
-        and endings that make your audience act.
-      </p>
-
-      <div class="fade-up d4 flex flex-wrap gap-4">
-        <a href="#work" class="btn-gold">See My Work</a>
-        <a href="https://wa.me/201124193934" target="_blank" rel="noopener" class="btn-outline">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0;">
-            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-          </svg>
-          WhatsApp Me
-        </a>
+    <div class="hero-content w-full px-6 pt-24 pb-16">
+      <div class="max-w-6xl mx-auto">
+        <p class="fade-up d1 tag mb-7">Reel Editor · Sound · Motion · Cairo</p>
+        <h1 class="fade-up d2 hero-title mb-7" style="font-size:clamp(2.9rem,11vw,8rem);padding-left:clamp(16px,2vw,28px);">
+          <span class="accent-bar"></span>
+          <span class="l-white">Viral Reel</span>
+          <span class="l-red">Editing</span>
+        </h1>
+        <p class="fade-up d3 mb-9 text-smoke" style="font-size:clamp(15px,2vw,18px);max-width:560px;line-height:1.7;">
+          Edits engineered to <span class="text-bone font-semibold">stop the scroll</span> in the first two seconds — hook-first cuts, punchy sound design, and motion that makes people <span class="text-bone font-semibold">watch till the end.</span>
+        </p>
+        <div class="fade-up d4 flex flex-wrap items-center gap-4">
+          <a href="videos.html" class="btn-red">
+            <svg width="16" height="16" viewBox="0 0 22 22" fill="none"><path d="M7 4L18 11L7 18V4Z" fill="#fff"/></svg>
+            See Some Of My Work
+          </a>
+          <a href="#contact" class="btn-ghost">Let's Work Together</a>
+        </div>
       </div>
-
     </div>
 
-    <!-- Scroll hint -->
-    <div class="fade-up d5 absolute bottom-8 left-1/2" style="transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:6px; opacity:0.38;">
-      <span style="font-size:10px; letter-spacing:0.18em; text-transform:uppercase; color:#6B6358;">Scroll</span>
-      <div style="width:1px; height:32px; background:linear-gradient(to bottom,#C9973A,transparent);"></div>
+    <div class="hidden md:block" style="position:absolute;bottom:30px;right:36px;z-index:2;opacity:0.85;">
+      <div class="reel-deco">
+        <span class="reel-hole" style="top:7px;left:50%;transform:translateX(-50%);"></span>
+        <span class="reel-hole" style="bottom:7px;left:50%;transform:translateX(-50%);"></span>
+        <span class="reel-hole" style="left:7px;top:50%;transform:translateY(-50%);"></span>
+        <span class="reel-hole" style="right:7px;top:50%;transform:translateY(-50%);"></span>
+      </div>
     </div>
   </section>
 
-  <div class="divider"></div>
+  <!-- ════════ TICKER ════════ -->
+  <div class="ticker-wrap">
+    <div class="ticker">
+      <span>HOOK-FIRST <b>·</b> SOUND DESIGN <b>·</b> MOTION GRAPHICS <b>·</b> RETENTION EDITING <b>·</b> VIRAL REELS <b>·</b> </span>
+      <span>HOOK-FIRST <b>·</b> SOUND DESIGN <b>·</b> MOTION GRAPHICS <b>·</b> RETENTION EDITING <b>·</b> VIRAL REELS <b>·</b> </span>
+    </div>
+  </div>
 
-
-  <!-- ════════════════════════════════ WORK ════════════════════════════════ -->
+  <!-- ════════ WORK CTA ════════ -->
   <section id="work" class="py-24 px-6">
     <div class="max-w-6xl mx-auto">
-
-      <div class="reveal mb-14">
-        <p class="text-gold text-xs font-medium mb-2" style="letter-spacing:0.2em;text-transform:uppercase;">Recent Work</p>
-        <h2 class="font-display text-cream h-accent" style="font-size:clamp(2rem,5vw,3.2rem); font-weight:600; letter-spacing:-0.02em;">Some of My Work</h2>
-        <p class="text-muted mt-8 max-w-lg" style="line-height:1.75;">A small selection from my recent edits — each one built with a clear goal.</p>
+      <div class="reveal mb-12">
+        <p class="tag mb-4">The Work</p>
+        <h2 class="font-display" style="font-size:clamp(2.4rem,7vw,4.5rem);line-height:0.95;text-transform:uppercase;">
+          <span class="text-bone">See the edits that </span><span class="red-fill">convert.</span>
+        </h2>
       </div>
 
-      <!-- Row 0: Featured — centered, large -->
-      <div class="reveal" style="display:flex;justify-content:center;margin-bottom:80px;">
-        <div class="phone-wrap" style="width:100%;max-width:360px;">
-          <div class="phone-glow" style="width:85%;height:100px;bottom:-50px;filter:blur(26px);"></div>
-          <div class="phone-vol"><span></span><span></span></div>
-          <div class="vid-wrap phone-frame" id="vw0">
-            <video id="v0" preload="none" playsinline
-                   style="width:100%;aspect-ratio:9/16;object-fit:cover;display:block;background:#0a0a0a;"
-                   src="https://res.cloudinary.com/dujeejgez/video/upload/portfolio/best-video.mp4">
-            </video>
-            <div class="vid-overlay" id="ov0">
-              <div style="display:flex;flex-direction:column;align-items:center;gap:12px;">
-                <div class="play-ring">
-                  <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-                    <path d="M7 4L18 11L7 18V4Z" fill="#C9973A"/>
-                  </svg>
-                </div>
-                <span style="font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(238,232,220,0.6);">Play</span>
-              </div>
+      <a href="videos.html" class="show-tile reveal block" aria-label="Watch all reels">
+        <div class="show-bg" style="background-image:url('https://res.cloudinary.com/dujeejgez/video/upload/so_2,w_1400,q_auto/portfolio/own-sound-design.jpg');"></div>
+        <div class="show-scrim"></div>
+        <div class="show-in">
+          <span class="chip mb-4" style="display:inline-block;margin-bottom:16px;">04 Featured Reels</span>
+          <div class="flex items-end justify-between gap-5">
+            <div>
+              <h3 class="font-display" style="font-size:clamp(2rem,5vw,3.4rem);text-transform:uppercase;color:#fff;line-height:0.98;">See Some Of My Work</h3>
+              <p class="text-smoke mt-3" style="font-size:15px;max-width:420px;line-height:1.6;">Hook-first reels, sound design, and motion graphics — full-screen, framed in red. Tap in.</p>
             </div>
-            <div class="glare"></div>
+            <span class="show-arrow"><svg width="20" height="20" viewBox="0 0 22 22" fill="none"><path d="M5 11h12M12 6l5 5-5 5" stroke="#FF2A2A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
           </div>
         </div>
-      </div>
-
-      <!-- Row 1: phone left, text right -->
-      <div class="reveal" style="display:flex;flex-direction:column;align-items:center;gap:48px;margin-bottom:72px;">
-        <div style="display:flex;flex-direction:column;width:100%;max-width:780px;gap:48px;align-items:center;">
-          <div style="display:flex;flex-direction:row;align-items:center;gap:56px;width:100%;" class="vid-row">
-            <div class="phone-wrap" style="flex:0 0 auto;width:260px;">
-              <div class="phone-glow"></div>
-              <div class="phone-vol"><span></span><span></span></div>
-              <div class="vid-wrap phone-frame" id="vw1">
-                <video id="v1" preload="none" playsinline
-                       style="width:100%;aspect-ratio:9/16;object-fit:cover;display:block;background:#0a0a0a;"
-                       src="https://res.cloudinary.com/dujeejgez/video/upload/portfolio/fourth-reel.mp4">
-                </video>
-                <div class="vid-overlay" id="ov1">
-                  <div class="play-ring" style="width:50px;height:50px;">
-                    <svg width="16" height="16" viewBox="0 0 22 22" fill="none">
-                      <path d="M7 4L18 11L7 18V4Z" fill="#C9973A"/>
-                    </svg>
-                  </div>
-                </div>
-                <div class="glare"></div>
-              </div>
-            </div>
-            <div style="flex:1;">
-              <p class="text-gold font-display" style="font-size:4rem;font-weight:600;line-height:1;opacity:0.12;margin-bottom:20px;">01</p>
-              <p class="font-display text-cream" style="font-size:clamp(1.4rem,3vw,2rem);font-weight:600;line-height:1.2;letter-spacing:-0.02em;margin-bottom:14px;">Hook-first editing.</p>
-              <p class="text-muted" style="font-size:14px;line-height:1.8;max-width:340px;">The first two seconds that stop the scroll. Every cut, transition, and beat placed to hold attention from the very first frame.</p>
-            </div>
-          </div>
-
-          <!-- Row 2: landscape video — full-width screen frame -->
-          <div style="width:100%;">
-            <div class="phone-wrap" style="position:relative;width:100%;">
-              <div class="phone-glow" style="width:50%;height:60px;bottom:-30px;filter:blur(20px);"></div>
-              <div class="vid-wrap screen-frame" id="vw2">
-                <video id="v2" preload="none" playsinline
-                       style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:#0a0a0a;"
-                       src="https://res.cloudinary.com/dujeejgez/video/upload/portfolio/own-sound-design.mp4">
-                </video>
-                <div class="vid-overlay" id="ov2">
-                  <div class="play-ring" style="width:56px;height:56px;">
-                    <svg width="18" height="18" viewBox="0 0 22 22" fill="none">
-                      <path d="M7 4L18 11L7 18V4Z" fill="#C9973A"/>
-                    </svg>
-                  </div>
-                </div>
-                <div class="glare"></div>
-              </div>
-            </div>
-            <div style="display:flex;align-items:flex-start;gap:40px;margin-top:28px;padding:0 4px;" class="vid-row">
-              <p class="text-gold font-display" style="font-size:3.5rem;font-weight:600;line-height:1;opacity:0.12;flex-shrink:0;">02</p>
-              <div>
-                <p class="font-display text-cream" style="font-size:clamp(1.2rem,2.5vw,1.7rem);font-weight:600;line-height:1.2;letter-spacing:-0.02em;margin-bottom:10px;">Emotion through sound.</p>
-                <p class="text-muted" style="font-size:14px;line-height:1.8;max-width:500px;">The layer most editors skip. Sound design that builds atmosphere and makes your audience feel something before a single word is spoken.</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Row 3: phone left, text right -->
-          <div style="display:flex;flex-direction:row;align-items:center;gap:56px;width:100%;" class="vid-row">
-            <div class="phone-wrap" style="flex:0 0 auto;width:260px;">
-              <div class="phone-glow"></div>
-              <div class="phone-vol"><span></span><span></span></div>
-              <div class="vid-wrap phone-frame" id="vw3">
-                <video id="v3" preload="none" playsinline
-                       style="width:100%;aspect-ratio:9/16;object-fit:cover;display:block;background:#0a0a0a;"
-                       src="https://res.cloudinary.com/dujeejgez/video/upload/portfolio/tutorial.mp4">
-                </video>
-                <div class="vid-overlay" id="ov3">
-                  <div class="play-ring" style="width:50px;height:50px;">
-                    <svg width="16" height="16" viewBox="0 0 22 22" fill="none">
-                      <path d="M7 4L18 11L7 18V4Z" fill="#C9973A"/>
-                    </svg>
-                  </div>
-                </div>
-                <div class="glare"></div>
-              </div>
-            </div>
-            <div style="flex:1;">
-              <p class="text-gold font-display" style="font-size:4rem;font-weight:600;line-height:1;opacity:0.12;margin-bottom:20px;">03</p>
-              <p class="font-display text-cream" style="font-size:clamp(1.4rem,3vw,2rem);font-weight:600;line-height:1.2;letter-spacing:-0.02em;margin-bottom:14px;">Clarity in every frame.</p>
-              <p class="text-muted" style="font-size:14px;line-height:1.8;max-width:340px;">Clean, intentional pacing that guides the viewer. Structure that makes complex ideas simple without losing depth.</p>
-            </div>
-          </div>
-        </div>
-      </div>
+      </a>
     </div>
   </section>
 
-  <div class="divider"></div>
+  <div class="strip"></div>
 
-
-  <!-- ════════════════════════════════ SERVICES ════════════════════════════════ -->
+  <!-- ════════ SERVICES ════════ -->
   <section id="services" class="py-24 px-6">
     <div class="max-w-6xl mx-auto">
-
-      <div class="reveal mb-14">
-        <p class="text-gold text-xs font-medium mb-2" style="letter-spacing:0.2em;text-transform:uppercase;">What I do</p>
-        <h2 class="font-display text-cream h-accent" style="font-size:clamp(2rem,5vw,3.2rem); font-weight:600; letter-spacing:-0.02em;">Services</h2>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-5 reveal">
-
-        <div class="svc-card">
-          <div style="width:40px;height:40px;border-radius:10px;background:rgba(201,151,58,0.1);display:flex;align-items:center;justify-content:center;margin-bottom:18px;transition:background 0.2s ease;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9973A" stroke-width="1.5">
-              <path d="M15 10l4.553-2.276A1 1 0 0121 8.723v6.554a1 1 0 01-1.447.894L15 14M3 8a2 2 0 012-2h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z"/>
-            </svg>
-          </div>
-          <h3 class="text-cream font-medium mb-2" style="font-size:15px;">Short-form Reels &amp; TikToks</h3>
-          <p class="text-muted" style="font-size:13.5px;line-height:1.75;">Hook-first edits built for the algorithm. Fast cuts, punchy pacing, and captions that keep eyes on screen.</p>
-        </div>
-
-        <div class="svc-card">
-          <div style="width:40px;height:40px;border-radius:10px;background:rgba(201,151,58,0.1);display:flex;align-items:center;justify-content:center;margin-bottom:18px;transition:background 0.2s ease;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9973A" stroke-width="1.5">
-              <path d="M9 19V6l12-3v13M9 19c0 1.1-1.34 2-3 2s-3-.9-3-2 1.34-2 3-2 3 .9 3 2zm12-3c0 1.1-1.34 2-3 2s-3-.9-3-2 1.34-2 3-2 3 .9 3 2z"/>
-            </svg>
-          </div>
-          <h3 class="text-cream font-medium mb-2" style="font-size:15px;">Sound Design &amp; Music</h3>
-          <p class="text-muted" style="font-size:13.5px;line-height:1.75;">The emotional layer most editors skip. I sync audio, layer effects, and choose music that amplifies your message.</p>
-        </div>
-
-        <div class="svc-card">
-          <div style="width:40px;height:40px;border-radius:10px;background:rgba(201,151,58,0.1);display:flex;align-items:center;justify-content:center;margin-bottom:18px;transition:background 0.2s ease;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9973A" stroke-width="1.5">
-              <path d="M4 6h16M4 12h10M4 18h6"/>
-            </svg>
-          </div>
-          <h3 class="text-cream font-medium mb-2" style="font-size:15px;">Motion Graphics &amp; Captions</h3>
-          <p class="text-muted" style="font-size:13.5px;line-height:1.75;">Kinetic text that reinforces your message. Captions that move with purpose — not just decorating the frame.</p>
-        </div>
-
-        <div class="svc-card md:col-span-3">
-          <div style="width:40px;height:40px;border-radius:10px;background:rgba(201,151,58,0.1);display:flex;align-items:center;justify-content:center;margin-bottom:18px;transition:background 0.2s ease;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9973A" stroke-width="1.5">
-              <circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/>
-            </svg>
-          </div>
-          <h3 class="text-cream font-medium mb-2" style="font-size:15px;">Content Strategy Consultation</h3>
-          <p class="text-muted" style="font-size:13.5px;line-height:1.75;">Before we edit, we plan. I help you figure out what content will actually work — the format, the hook, the angle — so every video has a purpose and a goal before the camera even rolls.</p>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-
-  <!-- ════════════════════════════════ ABOUT ════════════════════════════════ -->
-  <section id="about" class="py-24 px-6">
-    <div class="max-w-6xl mx-auto">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-
-        <!-- Text side -->
-        <div class="reveal">
-          <p class="text-gold text-xs font-medium mb-2" style="letter-spacing:0.2em;text-transform:uppercase;">About</p>
-          <h2 class="font-display text-cream mb-8" style="font-size:clamp(2rem,5vw,3rem); font-weight:600; line-height:1.1; letter-spacing:-0.02em;">
-            More than an editor.<br/>
-            <span class="text-gold-grad" style="font-style:italic;">A content partner.</span>
-          </h2>
-
-          <div style="display:flex;flex-direction:column;gap:16px;color:#6B6358;line-height:1.78;font-size:15px;">
-            <p>Most editors hand you a file and disappear. I stay in it with you — from the idea to the final export.</p>
-            <p>
-              I'm <span style="color:#EEE8DC;font-weight:500;">Mohamed Osama</span>, a video editor and content strategist based in Cairo.
-              I work with creators and brands who want content that doesn't just look good —
-              content that <span style="color:#EEE8DC;">performs</span>.
-            </p>
-            <p>
-              I think about the hook in the first two seconds, the pacing that keeps people watching,
-              and the ending that makes them take action.
-              Every cut has a reason. Every sound has a role.
-            </p>
-            <p>
-              If you want someone to press export and send you a file — I'm not your guy.
-              If you want someone who thinks about your <span style="color:#EEE8DC;">audience, your goal, and your growth</span> — let's talk.
-            </p>
-          </div>
-
-          <div class="mt-8">
-            <a href="https://wa.me/201124193934" target="_blank" rel="noopener" class="btn-gold">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0;">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-              </svg>
-              Start a conversation
-            </a>
-          </div>
-        </div>
-
-        <!-- Visual side -->
-        <div class="reveal" style="position:relative;">
-          <div style="aspect-ratio:4/5; border-radius:18px; overflow:hidden; background:#111111;
-                      box-shadow: 0 28px 90px rgba(0,0,0,0.65), 0 0 0 1px rgba(201,151,58,0.12);">
-            <!--
-              ⚠️ Replace with your actual photo.
-              Use a square or portrait crop for best results.
-            -->
-            <img src="688828156_122111140995259837_8332176616839840537_n.jpg"
-                 alt="Mohamed Osama"
-                 style="width:100%;height:100%;object-fit:cover;object-position:center top;" />
-            <!-- Gold bottom strip -->
-            <div style="position:absolute;bottom:0;left:0;right:0;height:3px;background:#C9973A;"></div>
-          </div>
-          <!-- Stat chips -->
-          <div style="position:absolute;left:-16px;top:22%;background:#181818;border-radius:10px;padding:12px 16px;
-                      border:1px solid rgba(255,255,255,0.07);box-shadow:0 10px 36px rgba(0,0,0,0.55);">
-            <p class="font-display text-gold" style="font-size:1.6rem;font-weight:600;line-height:1;">Cairo</p>
-            <p class="text-muted" style="font-size:11px;margin-top:2px;">Egypt · UTC+2</p>
-          </div>
-          <div style="position:absolute;right:-16px;bottom:22%;background:#181818;border-radius:10px;padding:12px 16px;
-                      border:1px solid rgba(255,255,255,0.07);box-shadow:0 10px 36px rgba(0,0,0,0.55);">
-            <p class="font-display text-gold" style="font-size:1.6rem;font-weight:600;line-height:1;">100%</p>
-            <p class="text-muted" style="font-size:11px;margin-top:2px;">Strategy Included</p>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-
-  <!-- ════════════════════════════════ CONTACT / FOOTER ════════════════════════════════ -->
-  <section id="contact" class="py-24 px-6">
-    <div class="max-w-6xl mx-auto text-center">
-
-      <div class="reveal">
-        <p class="text-gold text-xs font-medium mb-4" style="letter-spacing:0.2em;text-transform:uppercase;">Ready to work?</p>
-        <h2 class="font-display text-cream mb-5"
-            style="font-size:clamp(2.2rem,6vw,4rem);font-weight:600;line-height:1.08;letter-spacing:-0.02em;">
-          Let's build something<br/>
-          <span class="text-gold-grad" style="font-style:italic;">worth watching.</span>
+      <div class="reveal mb-12">
+        <p class="tag mb-4">What I Do</p>
+        <h2 class="font-display" style="font-size:clamp(2.4rem,7vw,4.5rem);line-height:0.95;text-transform:uppercase;">
+          <span class="text-bone">Services built to </span><span class="red-fill">perform.</span>
         </h2>
-        <p class="text-muted mx-auto mb-12 max-w-md" style="line-height:1.75;">
-          Send me a message on WhatsApp and tell me what you're working on. I'll get back to you fast.
-        </p>
-
-        <a href="https://wa.me/201124193934" target="_blank" rel="noopener" class="btn-gold" style="font-size:16px;padding:16px 36px;">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0;">
-            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-          </svg>
-          Message me on WhatsApp
-        </a>
-
-        <!-- Social icons -->
-        <div style="display:flex;align-items:center;justify-content:center;gap:16px;margin-top:48px;margin-bottom:48px;">
-
-          <!-- Instagram -->
-          <a href="https://www.instagram.com/mohamed_osama586/" target="_blank" rel="noopener" aria-label="Instagram"
-             style="width:42px;height:42px;border-radius:50%;border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;color:#6B6358;transition:color 0.2s ease,border-color 0.2s ease;"
-             onmouseover="this.style.color='#C9973A';this.style.borderColor='rgba(201,151,58,0.35)';"
-             onmouseout="this.style.color='#6B6358';this.style.borderColor='rgba(255,255,255,0.1)';"
-             onfocus="this.style.outline='2px solid #C9973A';this.style.outlineOffset='3px';"
-             onblur="this.style.outline='none';">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/>
-              <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
-            </svg>
-          </a>
-
-          <!-- Facebook -->
-          <a href="https://www.facebook.com/profile.php?id=61587795137637" target="_blank" rel="noopener" aria-label="Facebook"
-             style="width:42px;height:42px;border-radius:50%;border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;color:#6B6358;transition:color 0.2s ease,border-color 0.2s ease;"
-             onmouseover="this.style.color='#C9973A';this.style.borderColor='rgba(201,151,58,0.35)';"
-             onmouseout="this.style.color='#6B6358';this.style.borderColor='rgba(255,255,255,0.1)';"
-             onfocus="this.style.outline='2px solid #C9973A';this.style.outlineOffset='3px';"
-             onblur="this.style.outline='none';">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-            </svg>
-          </a>
-
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5 reveal">
+        <div class="svc">
+          <span class="num">01</span>
+          <div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF2A2A" stroke-width="1.6"><path d="M15 10l4.553-2.276A1 1 0 0121 8.723v6.554a1 1 0 01-1.447.894L15 14M3 8a2 2 0 012-2h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z"/></svg></div>
+          <h3 class="font-head text-bone font-bold mb-2" style="font-size:17px;">Short-form Reels &amp; TikToks</h3>
+          <p class="text-ash" style="font-size:14px;line-height:1.75;">Hook-first edits built for the algorithm. Fast cuts, punchy pacing, and captions that keep eyes locked to the screen.</p>
         </div>
-
-        <div class="divider" style="margin:0 0 24px 0;"></div>
-        <p class="text-muted" style="font-size:13px;">© 2026 Mohamed Osama · Cairo, Egypt</p>
+        <div class="svc">
+          <span class="num">02</span>
+          <div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF2A2A" stroke-width="1.6"><path d="M9 19V6l12-3v13M9 19c0 1.1-1.34 2-3 2s-3-.9-3-2 1.34-2 3-2 3 .9 3 2zm12-3c0 1.1-1.34 2-3 2s-3-.9-3-2 1.34-2 3-2 3 .9 3 2z"/></svg></div>
+          <h3 class="font-head text-bone font-bold mb-2" style="font-size:17px;">Sound Design &amp; Music</h3>
+          <p class="text-ash" style="font-size:14px;line-height:1.75;">The emotional layer most editors skip. I sync audio, layer effects, and pick music that amplifies your message.</p>
+        </div>
+        <div class="svc">
+          <span class="num">03</span>
+          <div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF2A2A" stroke-width="1.6"><path d="M4 6h16M4 12h10M4 18h6"/></svg></div>
+          <h3 class="font-head text-bone font-bold mb-2" style="font-size:17px;">Motion Graphics &amp; Captions</h3>
+          <p class="text-ash" style="font-size:14px;line-height:1.75;">Kinetic text that reinforces your message. Captions that move with purpose — not just decorating the frame.</p>
+        </div>
+        <div class="svc md:col-span-3">
+          <span class="num">04</span>
+          <div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF2A2A" stroke-width="1.6"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>
+          <h3 class="font-head text-bone font-bold mb-2" style="font-size:17px;">Content Strategy Consultation</h3>
+          <p class="text-ash" style="font-size:14px;line-height:1.75;max-width:640px;">Before we edit, we plan. I help you figure out what content will actually work — the format, the hook, the angle — so every video has a purpose and a goal before the camera even rolls.</p>
+        </div>
       </div>
     </div>
   </section>
 
+  <div class="strip"></div>
 
-  <!-- ════════════════════════════════ SCRIPTS ════════════════════════════════ -->
+  <!-- ════════ ARABIC INTAKE FORM ════════ -->
+  <section id="contact" class="py-24 px-6">
+    <div class="max-w-3xl mx-auto">
+      <div class="reveal mb-10 text-center">
+        <p class="tag center mb-5" style="justify-content:center;">استمارة المشروع</p>
+        <h2 class="font-display" style="font-size:clamp(2.2rem,6.5vw,4rem);line-height:0.98;">
+          <span class="text-bone">عايز نشتغل سوا؟ </span><span class="red-fill">جاوب الأسئلة دي.</span>
+        </h2>
+        <p class="text-smoke mt-5 font-ar" style="direction:rtl;font-size:16px;line-height:1.8;max-width:520px;margin-inline:auto;">
+          جاوب على الأسئلة دي وهتتبعت لي على الواتساب على طول، وهرد على حضرتك في أسرع وقت.
+        </p>
+      </div>
+
+      <div class="reveal form-wrap">
+        <div class="form-card">
+          <form id="projForm" onsubmit="sendToWhatsApp(event)" style="display:flex;flex-direction:column;gap:22px;">
+            <div>
+              <label class="lbl"><span class="dot"></span>اسم حضرتك إيه؟</label>
+              <input class="fld" name="name" required placeholder="اكتب اسمك هنا" />
+            </div>
+            <div>
+              <label class="lbl"><span class="dot"></span>ما نوع المحتوى اللي حضرتك محتاج تعمله إيديت؟</label>
+              <select class="fld" name="ctype" required>
+                <option value="">اختار نوع المحتوى…</option>
+                <option>ريلز / تيك توك (Short-form)</option>
+                <option>فيديو يوتيوب طويل</option>
+                <option>إعلان (Ad)</option>
+                <option>ساوند ديزاين وموسيقى</option>
+                <option>موشن جرافيك وكتابة (Captions)</option>
+                <option>حاجة تانية</option>
+              </select>
+            </div>
+            <div>
+              <label class="lbl"><span class="dot"></span>حضرتك هتشتغل بشكل شهري ولا فيديو بفيديو؟</label>
+              <select class="fld" name="collab" required>
+                <option value="">اختار…</option>
+                <option>تعاون شهري ثابت</option>
+                <option>فيديو بفيديو</option>
+                <option>لسه مش متأكد</option>
+              </select>
+            </div>
+            <div>
+              <label class="lbl"><span class="dot"></span>ما هو هدف حضرتك من المحتوى؟</label>
+              <select class="fld" name="goal" required>
+                <option value="">اختار الهدف…</option>
+                <option>زيادة المشاهدات والـ Reach</option>
+                <option>مبيعات / Leads</option>
+                <option>بناء البراند (Brand Awareness)</option>
+                <option>زيادة المتابعين</option>
+                <option>هدف تاني</option>
+              </select>
+            </div>
+            <div>
+              <label class="lbl"><span class="dot"></span>إيه الميزانية بتاعت حضرتك؟</label>
+              <input class="fld" name="budget" placeholder="مثال: 1500 جنيه للفيديو / حسب الاتفاق" />
+            </div>
+            <div>
+              <label class="lbl"><span class="dot"></span>إمتى حضرتك محتاج الشغل يخلص؟</label>
+              <select class="fld" name="deadline">
+                <option value="">اختار الوقت…</option>
+                <option>في أقرب وقت / الأسبوع ده</option>
+                <option>خلال أسبوعين</option>
+                <option>خلال الشهر</option>
+                <option>الوقت مرن</option>
+              </select>
+            </div>
+            <div>
+              <label class="lbl">أي تفاصيل تانية؟ (اختياري)</label>
+              <textarea class="fld" name="notes" rows="3" placeholder="احكيلي أكتر عن المشروع…"></textarea>
+            </div>
+            <button type="submit" class="btn-red" style="justify-content:center;margin-top:6px;font-size:15px;padding:16px;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              ابعت على الواتساب
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="strip"></div>
+
+  <!-- ════════ FOOTER ════════ -->
+  <footer class="py-20 px-6">
+    <div class="max-w-6xl mx-auto text-center">
+      <div class="reveal">
+        <p class="tag center mb-5" style="justify-content:center;">Ready To Work</p>
+        <h2 class="font-display mb-6" style="font-size:clamp(2.6rem,8vw,5.5rem);line-height:0.92;text-transform:uppercase;">
+          <span class="text-bone">Let's make it </span><span class="red-fill">go viral.</span>
+        </h2>
+        <p class="text-smoke mx-auto mb-10 max-w-md" style="line-height:1.75;">Tell me what you're working on — I'll get back to you fast.</p>
+        <a href="#contact" class="btn-red" style="font-size:16px;padding:17px 40px;">Let's Work Together</a>
+        <div style="display:flex;align-items:center;justify-content:center;gap:16px;margin:44px 0;">
+          <a href="https://www.instagram.com/mohamed_osama586/" target="_blank" rel="noopener" aria-label="Instagram"
+             style="width:46px;height:46px;border-radius:50%;border:1px solid rgba(225,20,20,0.25);display:flex;align-items:center;justify-content:center;color:#8A8A90;transition:color .25s var(--ease),border-color .25s var(--ease),transform .25s var(--spring),box-shadow .25s var(--ease);"
+             onmouseover="this.style.color='#FF2A2A';this.style.borderColor='rgba(225,20,20,0.7)';this.style.transform='translateY(-3px)';this.style.boxShadow='0 0 22px rgba(225,20,20,0.4)';"
+             onmouseout="this.style.color='#8A8A90';this.style.borderColor='rgba(225,20,20,0.25)';this.style.transform='translateY(0)';this.style.boxShadow='none';">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="https://www.facebook.com/profile.php?id=61587795137637" target="_blank" rel="noopener" aria-label="Facebook"
+             style="width:46px;height:46px;border-radius:50%;border:1px solid rgba(225,20,20,0.25);display:flex;align-items:center;justify-content:center;color:#8A8A90;transition:color .25s var(--ease),border-color .25s var(--ease),transform .25s var(--spring),box-shadow .25s var(--ease);"
+             onmouseover="this.style.color='#FF2A2A';this.style.borderColor='rgba(225,20,20,0.7)';this.style.transform='translateY(-3px)';this.style.boxShadow='0 0 22px rgba(225,20,20,0.4)';"
+             onmouseout="this.style.color='#8A8A90';this.style.borderColor='rgba(225,20,20,0.25)';this.style.transform='translateY(0)';this.style.boxShadow='none';">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </a>
+          <a href="https://wa.me/201124193934" target="_blank" rel="noopener" aria-label="WhatsApp"
+             style="width:46px;height:46px;border-radius:50%;border:1px solid rgba(225,20,20,0.25);display:flex;align-items:center;justify-content:center;color:#8A8A90;transition:color .25s var(--ease),border-color .25s var(--ease),transform .25s var(--spring),box-shadow .25s var(--ease);"
+             onmouseover="this.style.color='#FF2A2A';this.style.borderColor='rgba(225,20,20,0.7)';this.style.transform='translateY(-3px)';this.style.boxShadow='0 0 22px rgba(225,20,20,0.4)';"
+             onmouseout="this.style.color='#8A8A90';this.style.borderColor='rgba(225,20,20,0.25)';this.style.transform='translateY(0)';this.style.boxShadow='none';">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </a>
+        </div>
+        <p class="text-ash" style="font-size:13px;">© 2026 Mohamed Osama · Cairo, Egypt</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ════════ SCRIPTS ════════ -->
   <script>
-    // ── Mobile menu ──────────────────────────────────────────────────────
-    const menuBtn    = document.getElementById('menuBtn');
-    const mobileMenu = document.getElementById('mobileMenu');
-    const iconHam    = document.getElementById('iconHam');
-    const iconX      = document.getElementById('iconX');
+    const WA = '201124193934';
 
-    menuBtn.addEventListener('click', () => {
-      const open = !mobileMenu.classList.contains('hidden');
-      mobileMenu.classList.toggle('hidden', open);
-      iconHam.classList.toggle('hidden', !open);
-      iconX.classList.toggle('hidden', open);
-    });
-    mobileMenu.querySelectorAll('a').forEach(a => {
-      a.addEventListener('click', () => {
-        mobileMenu.classList.add('hidden');
-        iconHam.classList.remove('hidden');
-        iconX.classList.add('hidden');
-      });
-    });
+    // Mobile menu
+    const menuBtn=document.getElementById('menuBtn'), mobileMenu=document.getElementById('mobileMenu'),
+          iconHam=document.getElementById('iconHam'), iconX=document.getElementById('iconX');
+    menuBtn.addEventListener('click',()=>{const o=!mobileMenu.classList.contains('hidden');mobileMenu.classList.toggle('hidden',o);iconHam.classList.toggle('hidden',!o);iconX.classList.toggle('hidden',o);});
+    mobileMenu.querySelectorAll('a,button').forEach(a=>a.addEventListener('click',()=>{mobileMenu.classList.add('hidden');iconHam.classList.remove('hidden');iconX.classList.add('hidden');}));
 
-    // ── Video play/pause ─────────────────────────────────────────────────
-    const videos = [
-      { wrap: 'vw0', vid: 'v0', overlay: 'ov0' },
-      { wrap: 'vw1', vid: 'v1', overlay: 'ov1' },
-      { wrap: 'vw2', vid: 'v2', overlay: 'ov2' },
-      { wrap: 'vw3', vid: 'v3', overlay: 'ov3' },
-    ];
+    // Arabic form → WhatsApp
+    function sendToWhatsApp(e){
+      e.preventDefault();
+      const f=e.target;
+      const val=n=>{const el=f.querySelector(`[name="${n}"]`);return el?el.value.trim():'';};
+      const name=val('name'), ctype=val('ctype'), collab=val('collab'), goal=val('goal'), budget=val('budget'), deadline=val('deadline'), notes=val('notes');
+      const lines=['السلام عليكم يا محمد 👋','','📋 *استمارة مشروع جديدة*','',`👤 الاسم: ${name}`,`🎬 نوع المحتوى: ${ctype}`,`🤝 نوع التعاون: ${collab}`,`🎯 الهدف: ${goal}`];
+      if(budget) lines.push(`💰 الميزانية: ${budget}`);
+      if(deadline) lines.push(`⏰ الوقت: ${deadline}`);
+      if(notes) lines.push(`📝 تفاصيل: ${notes}`);
+      window.open(`https://wa.me/${WA}?text=${encodeURIComponent(lines.join('\n'))}`,'_blank');
+    }
 
-    videos.forEach(({ wrap, vid }) => {
-      const wrapEl = document.getElementById(wrap);
-      const vidEl  = document.getElementById(vid);
-
-      wrapEl.addEventListener('click', () => {
-        if (vidEl.paused) {
-          // Pause all others
-          videos.forEach(({ wrap: w2, vid: v2 }) => {
-            const other = document.getElementById(v2);
-            if (v2 !== vid && !other.paused) {
-              other.pause();
-              other.controls = false;
-              document.getElementById(w2).classList.remove('playing');
-            }
-          });
-          vidEl.play();
-          vidEl.controls = true;
-          wrapEl.classList.add('playing');
-        } else {
-          vidEl.pause();
-          vidEl.controls = false;
-          wrapEl.classList.remove('playing');
-        }
-      });
-
-      vidEl.addEventListener('ended', () => {
-        wrapEl.classList.remove('playing');
-        vidEl.controls = false;
-      });
-    });
-
-    // ── Lazy-load: only fetch metadata when video enters viewport ─────────
-    // Videos start with preload="none" — zero bytes until visible
-    const vidObserver = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          const el = e.target;
-          if (el.preload === 'none') el.preload = 'metadata';
-          vidObserver.unobserve(el);
-        }
-      });
-    }, { rootMargin: '300px' });
-
-    document.querySelectorAll('video').forEach(v => vidObserver.observe(v));
-
-    // ── 3D tilt on phone cards ────────────────────────────────────────────
-    document.querySelectorAll('.phone-wrap').forEach(wrap => {
-      let raf;
-
-      wrap.addEventListener('mousemove', (e) => {
-        cancelAnimationFrame(raf);
-        raf = requestAnimationFrame(() => {
-          const rect = wrap.getBoundingClientRect();
-          const x = (e.clientX - rect.left) / rect.width - 0.5;
-          const y = (e.clientY - rect.top) / rect.height - 0.5;
-          wrap.style.transition = 'transform 0.05s ease';
-          wrap.style.transform = `perspective(900px) rotateX(${-y * 15}deg) rotateY(${x * 15}deg) scale3d(1.03,1.03,1.03)`;
-        });
-      });
-
-      wrap.addEventListener('mouseleave', () => {
-        cancelAnimationFrame(raf);
-        wrap.style.transition = 'transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1)';
-        wrap.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg) scale3d(1,1,1)';
-      });
-    });
-
-    // ── Scroll reveal ─────────────────────────────────────────────────────
-    const revealObserver = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('visible');
-          revealObserver.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.08 });
-
-    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+    // Scroll reveal
+    const ro=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');ro.unobserve(e.target);}});},{threshold:0.08});
+    document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
   </script>
-
 </body>
 </html>

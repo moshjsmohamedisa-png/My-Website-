@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Some Of My Work — Mohamed Osama</title>
+  <meta name="description" content="Selected work by Mohamed Osama — hook-first reels, sound design, and motion graphics. Cairo." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      theme: { extend: {
+        colors: {
+          ink:'#070707', coal:'#0C0C0E', panel:'#121214', edge:'#1C1C20',
+          red:'#E11414', 'red-lt':'#FF2A2A', 'red-dk':'#8E0B0B', glow:'#FF3B3B',
+          bone:'#F4F1EE', ash:'#8A8A90', smoke:'#B8B8C0',
+        },
+        fontFamily: { display:['Anton','sans-serif'], head:['Archivo','sans-serif'], body:['Inter','sans-serif'] },
+      }}
+    }
+  </script>
+
+  <style>
+    :root { --spring: cubic-bezier(0.34,1.56,0.64,1); --ease: cubic-bezier(0.22,1,0.36,1); }
+    @property --ang { syntax:'<angle>'; initial-value:0deg; inherits:false; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; }
+    body {
+      background:
+        radial-gradient(ellipse 900px 600px at 85% -10%, rgba(225,20,20,0.16) 0%, transparent 56%),
+        radial-gradient(ellipse 700px 540px at -8% 30%, rgba(225,20,20,0.10) 0%, transparent 54%),
+        #070707;
+      color: #F4F1EE; font-family:'Inter',sans-serif; overflow-x: hidden;
+    }
+    ::selection { background: rgba(225,20,20,0.5); color: #fff; }
+    body::after {
+      content:''; position: fixed; inset:0; z-index: 9999; pointer-events:none; mix-blend-mode: overlay; opacity:.5;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
+    }
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: #070707; }
+    ::-webkit-scrollbar-thumb { background: #8E0B0B; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #E11414; }
+
+    .font-display { font-family:'Anton',sans-serif; letter-spacing:0.01em; }
+    .font-head { font-family:'Archivo',sans-serif; }
+
+    .nav-glass {
+      backdrop-filter: blur(20px) saturate(150%); -webkit-backdrop-filter: blur(20px) saturate(150%);
+      background: rgba(7,7,7,0.55); border-bottom: 1px solid rgba(225,20,20,0.18);
+    }
+    .tag { display:inline-flex; align-items:center; gap:12px; font-size:11px; letter-spacing:0.32em; text-transform:uppercase; color:#FF2A2A; font-weight:700; font-family:'Archivo',sans-serif; }
+    .tag::before { content:''; width:32px; height:2px; background:#E11414; box-shadow:0 0 10px rgba(225,20,20,0.8); }
+    .red-fill { color:#E11414; text-shadow: 0 0 30px rgba(225,20,20,0.7); }
+    .red-glow-text { color:#fff; text-shadow: 0 0 22px rgba(225,20,20,0.55), 0 0 60px rgba(225,20,20,0.3); }
+
+    .btn-red { display:inline-flex; align-items:center; gap:10px; padding:13px 26px; border-radius:10px;
+      background: linear-gradient(180deg,#FF2A2A 0%,#E11414 60%,#B30F0F 100%); color:#fff; font-weight:800; font-size:13px;
+      font-family:'Archivo',sans-serif; text-transform:uppercase; letter-spacing:0.06em;
+      box-shadow: 0 1px 0 rgba(255,255,255,0.25) inset, 0 10px 34px rgba(225,20,20,0.4), 0 0 0 1px rgba(225,20,20,0.3);
+      transition: transform .25s var(--spring), box-shadow .25s var(--ease); }
+    .btn-red:hover { transform: translateY(-2px); box-shadow: 0 1px 0 rgba(255,255,255,0.35) inset, 0 16px 46px rgba(225,20,20,0.6), 0 0 30px rgba(225,20,20,0.4); }
+    .btn-red:active { transform: translateY(0) scale(0.98); }
+
+    .btn-ghost { display:inline-flex; align-items:center; gap:9px; padding:12px 22px; border-radius:10px;
+      border:1.5px solid rgba(225,20,20,0.45); color:#F4F1EE; font-weight:700; font-size:13px; background:rgba(225,20,20,0.05);
+      font-family:'Archivo',sans-serif; text-transform:uppercase; letter-spacing:0.06em;
+      transition: transform .25s var(--spring), border-color .25s var(--ease), background .25s var(--ease); }
+    .btn-ghost:hover { transform: translateY(-2px); border-color:#E11414; background:rgba(225,20,20,0.12); }
+
+    .chip { display:inline-block; font-size:10.5px; letter-spacing:0.2em; text-transform:uppercase; color:#fff; font-weight:700; font-family:'Archivo',sans-serif;
+      background: rgba(225,20,20,0.85); border:1px solid rgba(255,60,60,0.5); padding:5px 12px; border-radius:999px; box-shadow:0 0 18px rgba(225,20,20,0.5); }
+    .chip.ghost { background: rgba(12,12,14,0.7); border:1px solid rgba(225,20,20,0.45); color:#FF2A2A; box-shadow:none; }
+
+    /* ════ ANIMATED RED GLOWING VIDEO FRAME ════ */
+    @keyframes rotateAng { to { --ang: 360deg; } }
+    .glow-frame {
+      position:relative; border-radius:20px; padding:3px; background:#0C0C0E;
+      isolation:isolate;
+    }
+    /* the traveling red light around the edge */
+    .glow-frame::before {
+      content:''; position:absolute; inset:0; border-radius:inherit; z-index:-1; padding:0;
+      background: conic-gradient(from var(--ang),
+        rgba(225,20,20,0) 0deg, rgba(225,20,20,0) 60deg,
+        #FF2A2A 110deg, #FF6B6B 130deg, #FF2A2A 150deg,
+        rgba(225,20,20,0) 200deg, rgba(225,20,20,0) 360deg);
+      animation: rotateAng 4.5s linear infinite;
+    }
+    /* soft blurred glow halo (same rotation) */
+    .glow-frame::after {
+      content:''; position:absolute; inset:-6px; border-radius:24px; z-index:-2;
+      background: conic-gradient(from var(--ang),
+        rgba(225,20,20,0) 0deg, rgba(225,20,20,0) 60deg,
+        rgba(255,42,42,0.9) 120deg, rgba(225,20,20,0) 200deg, rgba(225,20,20,0) 360deg);
+      filter: blur(16px); opacity:.75;
+      animation: rotateAng 4.5s linear infinite;
+    }
+    .glow-frame:hover::before, .glow-frame:hover::after { animation-duration: 2.6s; }
+    .glow-inner { position:relative; border-radius:17px; overflow:hidden; background:#000; }
+    .glow-inner video { display:block; width:100%; height:100%; object-fit:cover; background:#000; }
+
+    .play-orb { position:absolute; top:50%; left:50%; z-index:4; transform: translate(-50%,-50%);
+      width:70px; height:70px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer;
+      background: rgba(7,7,7,0.55); backdrop-filter: blur(8px); border:1.5px solid rgba(255,42,42,0.8);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.6), 0 0 26px rgba(225,20,20,0.5); transition: transform .35s var(--spring), background .3s var(--ease), opacity .3s var(--ease); }
+    .glow-frame:hover .play-orb { transform: translate(-50%,-50%) scale(1.1); background: rgba(225,20,20,0.92); }
+    .play-orb.hide { opacity:0; pointer-events:none; }
+    .vid-scrim { position:absolute; inset:0; z-index:3; pointer-events:none; transition:opacity .3s var(--ease);
+      background: linear-gradient(to top, rgba(7,7,7,0.85) 0%, transparent 45%, rgba(7,7,7,0.25) 100%); }
+    .vid-scrim.hide { opacity:0; }
+    .vid-meta { position:absolute; left:0; right:0; bottom:0; z-index:4; padding:22px; transition:opacity .3s var(--ease); }
+    .vid-meta.hide { opacity:0; }
+
+    .strip { height:1px; border:none; max-width:1100px; margin:0 auto;
+      background: linear-gradient(90deg, transparent 0%, rgba(225,20,20,0.65) 50%, transparent 100%);
+      box-shadow: 0 0 14px rgba(225,20,20,0.35); }
+
+    .reveal { opacity:0; transform: translateY(28px); transition: opacity .7s var(--ease), transform .7s var(--spring); }
+    .reveal.visible { opacity:1; transform: translateY(0); }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+    .fade-up { animation: fadeUp .9s var(--spring) both; }
+    .d1{animation-delay:.1s}.d2{animation-delay:.24s}.d3{animation-delay:.38s}
+
+    @media (prefers-reduced-motion: reduce){ *{animation:none!important;transition:none!important} .reveal{opacity:1!important;transform:none!important} .glow-frame::before,.glow-frame::after{animation:none!important} }
+  </style>
+</head>
+
+<body>
+
+  <!-- ════════ NAV ════════ -->
+  <nav class="fixed top-0 left-0 right-0 z-50 nav-glass">
+    <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="index.html" class="font-head text-lg font-extrabold text-bone hover:text-red flex items-center gap-2" style="letter-spacing:0.02em;transition:color .25s var(--ease);">
+        <span style="display:inline-flex;width:30px;height:30px;border-radius:8px;background:linear-gradient(180deg,#FF2A2A,#B30F0F);align-items:center;justify-content:center;box-shadow:0 0 18px rgba(225,20,20,0.5);">
+          <svg width="14" height="14" viewBox="0 0 22 22" fill="none"><path d="M7 4L18 11L7 18V4Z" fill="#fff"/></svg>
+        </span>
+        MOHAMED OSAMA
+      </a>
+      <a href="index.html" class="btn-ghost">
+        <svg width="16" height="16" viewBox="0 0 22 22" fill="none"><path d="M17 11H5M10 6l-5 5 5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Back Home
+      </a>
+    </div>
+  </nav>
+
+  <!-- ════════ HEADER ════════ -->
+  <header class="px-6 pt-32 pb-12">
+    <div class="max-w-6xl mx-auto">
+      <p class="fade-up d1 tag mb-5">Selected Work · Press Play</p>
+      <h1 class="fade-up d2 font-display" style="font-size:clamp(2.6rem,9vw,6.2rem);line-height:0.92;text-transform:uppercase;">
+        <span class="red-glow-text">Some Of </span><span class="red-fill">My Work.</span>
+      </h1>
+      <p class="fade-up d3 text-smoke mt-5" style="font-size:clamp(15px,2vw,17px);max-width:520px;line-height:1.7;">
+        Hook-first edits, sound design, and motion graphics — each one framed in live red. Tap any frame to play.
+      </p>
+    </div>
+  </header>
+
+  <!-- ════════ VIDEO GRID ════════ -->
+  <main class="px-6 pb-24">
+    <div class="max-w-6xl mx-auto">
+
+      <!-- Featured 16:9 -->
+      <div class="reveal mb-12">
+        <div class="glow-frame" style="max-width:960px;margin-inline:auto;">
+          <div class="glow-inner" style="aspect-ratio:16/9;">
+            <video data-src="https://res.cloudinary.com/dujeejgez/video/upload/portfolio/own-sound-design.mp4" poster="https://res.cloudinary.com/dujeejgez/video/upload/so_2,w_1400,q_auto/portfolio/own-sound-design.jpg" playsinline preload="none"></video>
+            <div class="vid-scrim"></div>
+            <div class="play-orb"><svg width="24" height="24" viewBox="0 0 22 22" fill="none"><path d="M7 4L18 11L7 18V4Z" fill="#fff"/></svg></div>
+            <div class="vid-meta">
+              <span class="chip" style="margin-bottom:10px;display:inline-block;">Featured · 16:9</span>
+              <p class="font-display" style="font-size:clamp(1.4rem,3vw,2.2rem);text-transform:uppercase;color:#fff;line-height:1;margin-top:8px;">Emotion Through Sound</p>
+              <p class="text-smoke" style="font-size:14px;margin-top:5px;">Sound design that makes the audience feel it before a word is spoken.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3 portrait 9:16 -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 reveal">
+
+        <div class="glow-frame">
+          <div class="glow-inner" style="aspect-ratio:9/16;">
+            <video data-src="https://res.cloudinary.com/dujeejgez/video/upload/portfolio/best-video.mp4" poster="https://res.cloudinary.com/dujeejgez/video/upload/so_2,w_700,q_auto/portfolio/best-video.jpg" playsinline preload="none"></video>
+            <div class="vid-scrim"></div>
+            <div class="play-orb"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M7 4L18 11L7 18V4Z" fill="#fff"/></svg></div>
+            <div class="vid-meta">
+              <span class="chip" style="margin-bottom:8px;display:inline-block;">★ Best Work</span>
+              <p class="font-display" style="font-size:1.5rem;text-transform:uppercase;color:#fff;line-height:1;margin-top:6px;">Hook-First Reel</p>
+              <p class="text-smoke" style="font-size:13px;margin-top:4px;">The first two seconds that stop the scroll.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="glow-frame">
+          <div class="glow-inner" style="aspect-ratio:9/16;">
+            <video data-src="https://res.cloudinary.com/dujeejgez/video/upload/portfolio/fourth-reel.mp4" poster="https://res.cloudinary.com/dujeejgez/video/upload/so_2,w_700,q_auto/portfolio/fourth-reel.jpg" playsinline preload="none"></video>
+            <div class="vid-scrim"></div>
+            <div class="play-orb"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M7 4L18 11L7 18V4Z" fill="#fff"/></svg></div>
+            <div class="vid-meta">
+              <span class="chip ghost" style="margin-bottom:8px;display:inline-block;">Reel · 9:16</span>
+              <p class="font-display" style="font-size:1.5rem;text-transform:uppercase;color:#fff;line-height:1;margin-top:6px;">Rhythm &amp; Pacing</p>
+              <p class="text-smoke" style="font-size:13px;margin-top:4px;">Cuts placed to hold attention to the last frame.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="glow-frame">
+          <div class="glow-inner" style="aspect-ratio:9/16;">
+            <video data-src="https://res.cloudinary.com/dujeejgez/video/upload/portfolio/tutorial.mp4" poster="https://res.cloudinary.com/dujeejgez/video/upload/so_2,w_700,q_auto/portfolio/tutorial.jpg" playsinline preload="none"></video>
+            <div class="vid-scrim"></div>
+            <div class="play-orb"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M7 4L18 11L7 18V4Z" fill="#fff"/></svg></div>
+            <div class="vid-meta">
+              <span class="chip ghost" style="margin-bottom:8px;display:inline-block;">Tutorial · 9:16</span>
+              <p class="font-display" style="font-size:1.5rem;text-transform:uppercase;color:#fff;line-height:1;margin-top:6px;">Clarity In Every Frame</p>
+              <p class="text-smoke" style="font-size:13px;margin-top:4px;">Complex ideas made simple without losing depth.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <div class="strip"></div>
+
+  <!-- ════════ CTA ════════ -->
+  <section class="py-20 px-6 text-center">
+    <div class="max-w-2xl mx-auto reveal">
+      <p class="tag mb-5" style="justify-content:center;">Like What You See?</p>
+      <h2 class="font-display mb-6" style="font-size:clamp(1.9rem,5.5vw,3.1rem);line-height:1;text-transform:uppercase;">
+        <span class="text-bone">Let's edit your </span><span class="red-fill">next viral hit.</span>
+      </h2>
+      <a href="index.html#contact" class="btn-red" style="font-size:15px;padding:16px 38px;">Let's Work Together</a>
+    </div>
+  </section>
+
+  <footer class="py-10 px-6 text-center">
+    <p class="text-ash" style="font-size:13px;">© 2026 Mohamed Osama · Cairo, Egypt</p>
+  </footer>
+
+  <!-- ════════ SCRIPTS ════════ -->
+  <script>
+    // Click-to-play: lazy-load src, play, hide overlays. Only one plays at a time.
+    const frames = document.querySelectorAll('.glow-inner');
+    let activeVid = null;
+
+    frames.forEach(inner=>{
+      const video = inner.querySelector('video');
+      const orb = inner.querySelector('.play-orb');
+      const scrim = inner.querySelector('.vid-scrim');
+      const meta = inner.querySelector('.vid-meta');
+
+      function showOverlays(show){
+        [orb,scrim,meta].forEach(el=>el && el.classList.toggle('hide', !show));
+      }
+
+      function playThis(){
+        if(!video.src) video.src = video.dataset.src;
+        if(activeVid && activeVid!==video){ activeVid.pause(); }
+        video.controls = true;
+        video.play().catch(()=>{});
+        activeVid = video;
+        showOverlays(false);
+      }
+
+      orb.addEventListener('click', playThis);
+      inner.addEventListener('click', e=>{ if(e.target===inner || e.target===scrim || e.target===meta){ playThis(); } });
+      video.addEventListener('pause', ()=>{ if(video.currentTime>0 && !video.ended) return; showOverlays(true); });
+      video.addEventListener('ended', ()=>{ showOverlays(true); video.controls=false; });
+    });
+
+    // Scroll reveal
+    const ro=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');ro.unobserve(e.target);}});},{threshold:0.08});
+    document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+  </script>
+</body>
+</html>
