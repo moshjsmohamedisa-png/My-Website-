@@ -7,7 +7,7 @@ redirects = []
 [functions."*"]
 
 [build]
-publish = "D:\\Claude Code Projects\\Portfolio"
+publish = "D:\\Claude Code Projects\\My-Website"
 publishOrigin = "default"
 
 [build.environment]
