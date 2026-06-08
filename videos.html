@@ -262,6 +262,7 @@
     // ── TikTok-style reels: muted previews autoplay in-viewport; tap = full quality + sound.
     //    Only ONE video ever has audio at a time.
     const vids = Array.from(document.querySelectorAll('.reel-vid'));
+    const isMobile = window.matchMedia('(max-width:768px)').matches;
     let activeAudio = null;
 
     function setOverlays(v, show){
@@ -271,12 +272,15 @@
       });
     }
 
-    // mute a video back to its silent looping preview state
+    // return a video to its silent state. Desktop: looping muted preview. Mobile: stop & show poster (no decode).
     function toSilent(v){
       v.muted = true; v.loop = true; v.controls = false;
-      if(v._mode !== 'preview'){
+      if(isMobile){
+        v.pause();
+        if(v.getAttribute('src')){ v.removeAttribute('src'); v.load(); } // unload → back to poster, frees the decoder
+        v._mode = 'idle';
+      } else if(v._mode !== 'preview'){
         v._mode = 'preview';
-        const t = v.currentTime;
         v.src = v.dataset.preview; v.load();
         v.play().catch(()=>{});
       }
@@ -303,21 +307,32 @@
       v.addEventListener('ended', ()=>{ if(v===activeAudio){ activeAudio=null; toSilent(v); } });
     });
 
-    // play/pause muted previews based on visibility + drive the border animation
-    const io = new IntersectionObserver(entries=>{
-      entries.forEach(e=>{
-        const v = e.target;
-        v.closest('.glow-frame').classList.toggle('in-view', e.isIntersecting);
-        if(e.isIntersecting){
-          if(!v.src){ v._mode='preview'; v.src = v.dataset.preview; v.load(); }
-          if(v.muted) v.play().catch(()=>{});           // resume silent preview
-        } else {
-          v.pause();
-          if(v===activeAudio){ activeAudio=null; toSilent(v); } // scrolled away from the audio reel → silence it
-        }
-      });
-    }, {threshold:0.35});
-    vids.forEach(v=>io.observe(v));
+    if(!isMobile){
+      // DESKTOP: muted previews autoplay while in view; drive the border animation
+      const io = new IntersectionObserver(entries=>{
+        entries.forEach(e=>{
+          const v = e.target;
+          v.closest('.glow-frame').classList.toggle('in-view', e.isIntersecting);
+          if(e.isIntersecting){
+            if(!v.getAttribute('src')){ v._mode='preview'; v.src = v.dataset.preview; v.load(); }
+            if(v.muted) v.play().catch(()=>{});         // resume silent preview
+          } else {
+            v.pause();
+            if(v===activeAudio){ activeAudio=null; toSilent(v); }
+          }
+        });
+      }, {threshold:0.35});
+      vids.forEach(v=>io.observe(v));
+    } else {
+      // MOBILE: no autoplay (perfectly smooth scrolling). Poster shows; tap to play.
+      // Just stop a playing reel once it scrolls off-screen to free the decoder.
+      const io = new IntersectionObserver(entries=>{
+        entries.forEach(e=>{
+          if(!e.isIntersecting && e.target===activeAudio){ activeAudio=null; toSilent(e.target); }
+        });
+      }, {threshold:0.1});
+      vids.forEach(v=>io.observe(v));
+    }
 
     // Scroll reveal
     const ro=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');ro.unobserve(e.target);}});},{threshold:0.08});
