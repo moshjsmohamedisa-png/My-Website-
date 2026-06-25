@@ -129,6 +129,10 @@
 
     /* mobile: static red border (no animated conic / blur halo) → smooth, no GPU hang */
     @media (max-width:768px){
+      /* render safety: real phone GPUs choke on the full-screen feTurbulence film grain
+         + nav backdrop blur, which blanked the page to black. Drop them on phones. */
+      body::after{ display:none!important; }
+      .nav-glass{ backdrop-filter:none!important; -webkit-backdrop-filter:none!important; background:rgba(7,7,7,0.94)!important; }
       .glow-frame::before{ background:#E11414!important; animation:none!important; }
       .glow-frame::after{ display:none!important; }
       .font-display{ line-height:1.04!important; }

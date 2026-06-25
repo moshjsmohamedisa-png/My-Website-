@@ -184,6 +184,13 @@
       .tag{ font-size:10px; letter-spacing:0.2em; }
       .svc .num{ font-size:2rem; }
     }
+    /* ════ MOBILE RENDER SAFETY ════
+       Real phone GPUs choke on the full-screen feTurbulence film grain + nav backdrop blur,
+       which blanked the whole page to black. Desktop keeps them; phones drop them. */
+    @media (max-width:768px){
+      body::after{ display:none!important; }
+      .nav-glass{ backdrop-filter:none!important; -webkit-backdrop-filter:none!important; background:rgba(7,7,7,0.94)!important; }
+    }
     @media (prefers-reduced-motion: reduce){ *{animation:none!important;transition:none!important} .reveal{opacity:1!important;transform:none!important} }
   </style>
 </head>
